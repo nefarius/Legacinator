@@ -10,12 +10,12 @@
     <Grid>
         <mah:MetroTabControl Margin="16">
             <mah:MetroTabItem Header="Detection">
-                <StackPanel Margin="16">
+                <StackPanel>
                     <Label Content="Legacy device driver detection utility" />
-                    <mah:MetroHeader Margin="0, 16, 0, 16"
+                    <mah:MetroHeader Margin="8, 16, 0, 16"
                                      Header="If problems are detected, they will show up below as tiles you can click on to get a solution!" />
 
-                    <WrapPanel x:Name="ResultsPanel"/>
+                    <WrapPanel Margin="8" x:Name="ResultsPanel"/>
                 </StackPanel>
             </mah:MetroTabItem>
 
