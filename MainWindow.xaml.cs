@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using MahApps.Metro.Controls;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
@@ -82,22 +83,22 @@ namespace Legacinator
 
         private void ScpBthOnClicked()
         {
-            
+            Process.Start(@"https://vigem.org/projects/ScpToolkit/ScpToolkit-Removal-Guide/");
         }
 
         private void ScpDS3OnClicked()
         {
-            
+            Process.Start(@"https://vigem.org/projects/ScpToolkit/ScpToolkit-Removal-Guide/");
         }
 
         private void ScpVBusOnClicked()
         {
-            
+            Process.Start(@"https://vigem.org/projects/ScpToolkit/ScpToolkit-Removal-Guide/");
         }
 
         private void ScpDS4OnClicked()
         {
-            
+            Process.Start(@"https://vigem.org/projects/ScpToolkit/ScpToolkit-Removal-Guide/");
         }
 
         private void HidGuardianOnClicked()
