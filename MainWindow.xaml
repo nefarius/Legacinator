@@ -6,19 +6,43 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
                  Icon="floppy_disk_icon.ico" Loaded="MainWindow_OnLoaded"
-                 Title="Nefarius' Legacinator" Height="500" Width="800">
+                 Title="Nefarius' Legacinator" Height="440" Width="700">
     <Grid>
         <mah:MetroTabControl Margin="16">
             <mah:MetroTabItem Header="Detection">
                 <StackPanel Margin="16">
+                    <Label Content="Legacy device driver detection utility" />
                     <mah:MetroHeader Margin="0, 16, 0, 16"
-                        Header="If problems are detected, they will show up below as tiles you can click on to get information about a solution!" />
+                                     Header="If problems are detected, they will show up below as tiles you can click on to get a solution!" />
 
                     <WrapPanel x:Name="ResultsPanel"/>
                 </StackPanel>
             </mah:MetroTabItem>
 
-            <mah:MetroTabItem Header="About" />
+            <mah:MetroTabItem Header="About">
+                <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- License section -->
+                <TextBlock TextWrapping="Wrap"
+                           TextAlignment="Justify"
+                           Grid.Row="1">
+                    Copyright (c) 2022, Benjamin Höglinger-Stelzer<LineBreak />
+                    All rights reserved.<LineBreak />
+                    <LineBreak />
+                    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:<LineBreak />
+                    <LineBreak />
+                    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.<LineBreak /><LineBreak />
+                    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.<LineBreak />
+                    <LineBreak />
+                    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+                </TextBlock>
+            </Grid>
+            </mah:MetroTabItem>
         </mah:MetroTabControl>
     </Grid>
 </mah:MetroWindow>

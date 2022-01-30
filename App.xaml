@@ -12,6 +12,10 @@
                 <!-- Theme setting -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/dark.indigo.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                <Setter Property="FontSize" Value="24px"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
