@@ -103,6 +103,7 @@ namespace Legacinator
 
         private void HidGuardianOnClicked()
         {
+            Process.Start(@"https://docs.ds4windows.app/guides/uninstalling-ds4windows/#legacy-drivers");
         }
     }
 }
