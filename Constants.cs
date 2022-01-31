@@ -8,7 +8,11 @@ namespace Legacinator
 
         public const string ViGemBusVersion1_14HardwareId = @"Root\ViGEmBus";
 
+        public const string ViGemBusVersion1_16HardwareId = @"Nefarius\ViGEmBus\Gen1";
+
         public static Version ViGEmBusVersionLatest = new("1.17.333.0");
+
+        public static Guid ViGEmBusGen1InterfaceGuid = new("{96E42B22-F5E9-42F8-B043-ED0F932F014F}");
 
         public static Guid ScpToolkitBluetoothDongleInterfaceGuid = new("{2F87C733-60E0-4355-8515-95D6978418B2}");
 

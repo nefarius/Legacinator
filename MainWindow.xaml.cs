@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -109,13 +111,47 @@ namespace Legacinator
                 ResultsPanel.Children.Add(tile);
             }
 
+            //
+            // Scan for ViGEmBus Gen1 and check version
+            // 
+            if (Devcon.FindByInterfaceGuid(Constants.ViGEmBusGen1InterfaceGuid, out _, out var instanceId, 0, false))
+            {
+                try
+                {
+                    var bus = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+
+                    var hardwareId = bus.GetProperty<string[]>(DevicePropertyDevice.HardwareIds).ToList().First();
+                    var driverVersion = new Version(bus.GetProperty<string>(DevicePropertyDevice.DriverVersion));
+
+                    if (hardwareId.Equals(Constants.ViGemBusVersion1_16HardwareId, StringComparison.OrdinalIgnoreCase)
+                        && driverVersion < Constants.ViGEmBusVersionLatest)
+                    {
+                        var tile = new ResultTile
+                        {
+                            Title = $"Outdated ViGEmBus (Gen1) Driver found (v{driverVersion})"
+                        };
+
+                        tile.Clicked += ViGEmBusGen1OutdatedOnClicked;
+
+                        ResultsPanel.Children.Add(tile);
+                    }
+                }
+                catch { }
+            }
+
             if (ResultsPanel.Children.Count == 0)
                 await this.ShowMessageAsync("All good",
                     "Congratulations, seems like this system is free of any known problematic legacy drivers!");
         }
 
+        private void ViGEmBusGen1OutdatedOnClicked()
+        {
+            Process.Start(@"https://github.com/ViGEm/ViGEmBus/releases/latest");
+        }
+
         private void ViGEmBusPreGen1OnClicked()
         {
+            Process.Start(@"https://github.com/ViGEm/ViGEmBus/releases/latest");
         }
 
         private void ScpBthOnClicked()
