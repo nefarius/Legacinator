@@ -9,7 +9,7 @@
     <AssemblyTitle>Legacinator</AssemblyTitle>
     <Product>Legacinator</Product>
     <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022</Copyright>
-    <OutputPath>$SolutionDir)bin\$(Configuration)\</OutputPath>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
     <UseWPF>true</UseWPF>
     <Version>1.0.0</Version>
