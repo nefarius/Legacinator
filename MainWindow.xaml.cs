@@ -139,9 +139,30 @@ namespace Legacinator
                 catch { }
             }
 
+            //
+            // Look for HP Fork of ViGEmBus (v1.14.x) virtual device
+            // 
+            if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+                    Constants.ViGEmBusHPForkHardwareId))
+            {
+                var tile = new ResultTile
+                {
+                    Title = "HP Fork of ViGEmBus Driver found"
+                };
+
+                tile.Clicked += HPForkViGEmBusOnClicked;
+
+                ResultsPanel.Children.Add(tile);
+            }
+
             if (ResultsPanel.Children.Count == 0)
                 await this.ShowMessageAsync("All good",
                     "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+        }
+
+        private void HPForkViGEmBusOnClicked()
+        {
+            Process.Start(@"https://github.com/ViGEm/ViGEmBus/issues/99");
         }
 
         private void ViGEmBusGen1OutdatedOnClicked()
