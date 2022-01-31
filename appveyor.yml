@@ -1,4 +1,4 @@
-version: 1.0.{build}-beta
+version: 1.0.{build}
 image: Visual Studio 2019
 configuration:
 - Release
@@ -21,5 +21,5 @@ skip_commits:
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\$(APPVEYOR_PROJECT_NAME).sln
 artifacts:
-- path: 'bin**\*.nupkg'
+- path: 'bin**\*.exe'
 test: off
