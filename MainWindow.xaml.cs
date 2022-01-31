@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
 namespace Legacinator
@@ -15,7 +16,7 @@ namespace Legacinator
             InitializeComponent();
         }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             //
             // Look for HidGuardian virtual device
@@ -32,6 +33,9 @@ namespace Legacinator
                 ResultsPanel.Children.Add(tile);
             }
 
+            //
+            // Look for SCP DS3 drivers
+            // 
             if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock3InterfaceGuid, out _, out _, 0, false))
             {
                 var tile = new ResultTile
@@ -44,6 +48,9 @@ namespace Legacinator
                 ResultsPanel.Children.Add(tile);
             }
 
+            //
+            // Look for SCP DS4 drivers
+            // 
             if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock4InterfaceGuid, out _, out _, 0, false))
             {
                 var tile = new ResultTile
@@ -56,6 +63,9 @@ namespace Legacinator
                 ResultsPanel.Children.Add(tile);
             }
 
+            //
+            // Look for SCP BTH drivers
+            // 
             if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitBluetoothDongleInterfaceGuid, out _, out _, 0, false))
             {
                 var tile = new ResultTile
@@ -68,6 +78,9 @@ namespace Legacinator
                 ResultsPanel.Children.Add(tile);
             }
 
+            //
+            // Look for SCPVBus
+            // 
             if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitScpVBusInterfaceGuid, out _, out _, 0, false))
             {
                 var tile = new ResultTile
@@ -79,6 +92,30 @@ namespace Legacinator
 
                 ResultsPanel.Children.Add(tile);
             }
+
+            //
+            // Look for old ViGEmBus (v1.14.x) virtual device
+            // 
+            if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+                    Constants.ViGemBusVersion1_14HardwareId))
+            {
+                var tile = new ResultTile
+                {
+                    Title = "Deprecated ViGEmBus (pre-Gen1) Driver found"
+                };
+
+                tile.Clicked += ViGEmBusPreGen1OnClicked;
+
+                ResultsPanel.Children.Add(tile);
+            }
+
+            if (ResultsPanel.Children.Count == 0)
+                await this.ShowMessageAsync("All good",
+                    "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+        }
+
+        private void ViGEmBusPreGen1OnClicked()
+        {
         }
 
         private void ScpBthOnClicked()

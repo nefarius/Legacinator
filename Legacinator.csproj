@@ -21,6 +21,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="splash.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
@@ -36,5 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="floppy_disk_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="splash.png" />
   </ItemGroup>
 </Project>

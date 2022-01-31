@@ -6,6 +6,10 @@ namespace Legacinator
     {
         public const string HidGuardianHardwareId = @"Root\HidGuardian";
 
+        public const string ViGemBusVersion1_14HardwareId = @"Root\ViGEmBus";
+
+        public static Version ViGEmBusVersionLatest = new("1.17.333.0");
+
         public static Guid ScpToolkitBluetoothDongleInterfaceGuid = new("{2F87C733-60E0-4355-8515-95D6978418B2}");
 
         public static Guid ScpToolkitDualShock3InterfaceGuid = new("{E2824A09-DBAA-4407-85CA-C8E8FF5F6FFA}");
