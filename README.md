@@ -10,9 +10,13 @@ Ever wondered why that darn game controller just won't show up in games, Steam o
 
 The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of known legacy (outdated, potentially faulty) device drivers (leftovers from [ScpToolkit](https://github.com/nefarius/ScpToolkit), outdated [ViGEmBus](https://github.com/ViGEm/ViGEmBus) copies etc.) and provide a solution to the user.
 
+## Environment
+
+This tool was built for **Windows 10**. Anything lower might work but is not supported.
+
 ## Download
 
-[Get the lastes build from here](https://ci.appveyor.com/api/projects/nefarius/legacinator/artifacts/bin%2FRelease%2FLegacinator.exe). If this doesn't work, [check the Rleases page](../../releases/latest).
+[Get the lastes build from here](https://ci.appveyor.com/api/projects/nefarius/legacinator/artifacts/bin%2FRelease%2FLegacinator.exe). If this link doesn't work, [check the Rleases page](../../releases/latest).
 
 ## Usage examples
 
