@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legacinator", "Legacinator.csproj", "{C0A643DF-772A-460F-99E8-4DD8090C8F38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legacinator", "app\Legacinator.csproj", "{C0A643DF-772A-460F-99E8-4DD8090C8F38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
