@@ -12,11 +12,11 @@ The Legacinator is a simple self-contained .NET 4.8 application that has one tas
 
 ## Environment
 
-This tool was built for **Windows 10**. Anything lower might work but is not supported.
+This tool was built for **Windows 10**. Anything lower might work but is not supported. Since .NET 4.8 ships with Windows, the tool should be ready to run once downloaded.
 
 ## Download
 
-🚨 **This is fairly young software, signed binaries coming soon** 🚨
+🚨 **This is fairly young software (so Anti-Virus might complain), signed binaries coming soon** 🚨
 
 [Get the lastes build from here](https://ci.appveyor.com/api/projects/nefarius/legacinator/artifacts/bin%2FRelease%2FLegacinator.exe). If this link doesn't work, [check the Rleases page](../../releases/latest).
 
