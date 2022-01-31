@@ -1,0 +1,25 @@
+version: 1.0.{build}-beta
+image: Visual Studio 2019
+configuration:
+- Release
+install:
+- cmd: git submodule -q update --init
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- nuget restore
+skip_commits:
+  files:
+    - assets/*
+    - '**/*.md'
+build:
+  project: $(APPVEYOR_BUILD_FOLDER)\$(APPVEYOR_PROJECT_NAME).sln
+artifacts:
+- path: 'bin**\*.nupkg'
+test: off
