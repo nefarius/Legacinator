@@ -16,6 +16,8 @@ This tool was built for **Windows 10**. Anything lower might work but is not sup
 
 ## Download
 
+🚨 **This is fairly young software, signed binaries coming soon** 🚨
+
 [Get the lastes build from here](https://ci.appveyor.com/api/projects/nefarius/legacinator/artifacts/bin%2FRelease%2FLegacinator.exe). If this link doesn't work, [check the Rleases page](../../releases/latest).
 
 ## Usage examples
