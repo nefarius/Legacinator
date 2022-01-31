@@ -24,4 +24,4 @@ On a "clean" machine you simply get a success dialog:
 
 ## Download
 
-[Get the lastes build from here](https://ci.appveyor.com/api/projects/nefarius/legacinator/artifacts/bin%2FRelease%2FLegacinator.exe). If this doesn't work, [check the Rleases page](releases/latest).
+[Get the lastes build from here](https://ci.appveyor.com/api/projects/nefarius/legacinator/artifacts/bin%2FRelease%2FLegacinator.exe). If this doesn't work, [check the Rleases page](../../releases/latest).
