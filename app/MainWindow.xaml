@@ -13,7 +13,7 @@
                 <StackPanel>
                     <Label Content="Legacy device driver detection utility" />
                     <mah:MetroHeader Margin="8, 16, 0, 16"
-                                     Header="If problems are detected, they will show up below as tiles you can click on to get a solution!" />
+                                     Header="If faulty components are detected, they will show up below as tiles you can click on to get it resolved!" />
 
                     <WrapPanel Margin="8" x:Name="ResultsPanel"/>
                 </StackPanel>
