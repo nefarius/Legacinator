@@ -162,7 +162,7 @@ namespace Legacinator
                     {
                         var tile = new ResultTile
                         {
-                            Title = $"ViGEmBus Drivers (v{driverVersion}) found"
+                            Title = $"ViGEmBus Driver (v{driverVersion}) found"
                         };
 
                         ResultsPanel.Children.Add(tile);
