@@ -12,6 +12,16 @@ namespace Legacinator
 
         public const string ViGEmBusHPForkHardwareId = @"SWC\HPIC0004_ViGEmBus";
 
+        public const string ScpDualShock3InfName = "ds3controller.inf";
+        
+        public const string ScpDualShock4InfName = "ds4controller.inf";
+        
+        public const string ScpBluetoothInfName = "bluetoothhost.inf";
+        
+        public const string ScpVBusInfName = "scpvbus.inf";
+        
+        public const string HidGuardianInfName = "HidGuardian.inf";
+
         public static Version ViGEmBusVersionLatest = new("1.17.333.0");
 
         public static Guid ViGEmBusGen1InterfaceGuid = new("{96E42B22-F5E9-42F8-B043-ED0F932F014F}");
