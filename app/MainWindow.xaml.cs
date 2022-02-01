@@ -189,9 +189,64 @@ namespace Legacinator
             Process.Start(@"https://github.com/ViGEm/ViGEmBus/issues/99");
         }
 
-        private void ViGEmBusGen1OutdatedOnClicked()
+        private async void ViGEmBusGen1OutdatedOnClicked()
         {
-            Process.Start(@"https://github.com/ViGEm/ViGEmBus/releases/latest");
+            var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
+
+            await Task.Run(() =>
+            {
+                Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+                    Constants.ViGemBusVersion1_16HardwareId,
+                    out var instances);
+
+                foreach (var instanceId in instances)
+                {
+                    Log.Information("Processing instance {Instance}", instanceId);
+
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
+
+                    controller.SetMessage("Removing device");
+
+                    try
+                    {
+                        Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to remove device");
+                    }
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.ViGEmBusInfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
+                }
+            });
+
+            await Refresh();
+
+            await controller.CloseAsync();
         }
 
         private async void ViGEmBusPreGen1OnClicked()
