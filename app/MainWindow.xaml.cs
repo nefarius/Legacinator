@@ -194,53 +194,111 @@ namespace Legacinator
             Process.Start(@"https://github.com/ViGEm/ViGEmBus/releases/latest");
         }
 
-        private void ViGEmBusPreGen1OnClicked()
+        private async void ViGEmBusPreGen1OnClicked()
         {
-            Process.Start(@"https://github.com/ViGEm/ViGEmBus/releases/latest");
+            var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
+
+            await Task.Run(() =>
+            {
+                Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+                    Constants.ViGemBusVersion1_14HardwareId,
+                    out var instances);
+
+                foreach (var instanceId in instances)
+                {
+                    Log.Information("Processing instance {Instance}", instanceId);
+
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
+
+                    controller.SetMessage("Removing device");
+
+                    try
+                    {
+                        Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to remove device");
+                    }
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.ViGEmBusInfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
+                }
+            });
+
+            await Refresh();
+
+            await controller.CloseAsync();
         }
 
         private async void ScpBthOnClicked()
         {
             var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
-            var instance = 0;
-
-            while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitBluetoothDongleInterfaceGuid, out _,
-                       out var instanceId,
-                       instance++, false))
+            await Task.Run(() =>
             {
-                var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+                var instance = 0;
 
-                var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
-
-                try
+                while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitBluetoothDongleInterfaceGuid, out _,
+                           out var instanceId,
+                           instance++, false))
                 {
-                    controller.SetMessage("Deleting device driver");
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver");
-                }
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
 
-                controller.SetMessage("Removing device");
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
 
-                Devcon.Remove(Constants.ScpToolkitBluetoothDongleInterfaceGuid, instanceId);
-                
-                try
-                {
-                    controller.SetMessage("Deleting device driver store copies");
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
 
-                    foreach (var path in DriverStore.ExistingDrivers.Where(d =>
-                                 d.Contains(Constants.ScpBluetoothInfName)))
-                        DriverStore.RemoveDriver(path);
+                    controller.SetMessage("Removing device");
+
+                    Devcon.Remove(Constants.ScpToolkitBluetoothDongleInterfaceGuid, instanceId);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.ScpBluetoothInfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver store copy");
-                }
-            }
+            });
 
             await Refresh();
 
@@ -251,43 +309,47 @@ namespace Legacinator
         {
             var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
-            var instance = 0;
-
-            while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock3InterfaceGuid, out _, out var instanceId,
-                       instance++, false))
+            await Task.Run(() =>
             {
-                var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+                var instance = 0;
 
-                var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
-
-                try
+                while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock3InterfaceGuid, out _,
+                           out var instanceId,
+                           instance++, false))
                 {
-                    controller.SetMessage("Deleting device driver");
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
+
+                    controller.SetMessage("Removing device");
+
+                    Devcon.Remove(Constants.ScpToolkitDualShock3InterfaceGuid, instanceId);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.ScpDualShock3InfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver");
-                }
-
-                controller.SetMessage("Removing device");
-
-                Devcon.Remove(Constants.ScpToolkitDualShock3InterfaceGuid, instanceId);
-
-                try
-                {
-                    controller.SetMessage("Deleting device driver store copies");
-
-                    foreach (var path in DriverStore.ExistingDrivers.Where(d =>
-                                 d.Contains(Constants.ScpDualShock3InfName)))
-                        DriverStore.RemoveDriver(path);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver store copy");
-                }
-            }
+            });
 
             await Refresh();
 
@@ -298,43 +360,46 @@ namespace Legacinator
         {
             var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
-            var instance = 0;
-
-            while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitScpVBusInterfaceGuid, out _, out var instanceId,
-                       instance++, false))
+            await Task.Run(() =>
             {
-                var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+                var instance = 0;
 
-                var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
-
-                try
+                while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitScpVBusInterfaceGuid, out _, out var instanceId,
+                           instance++, false))
                 {
-                    controller.SetMessage("Deleting device driver");
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
+
+                    controller.SetMessage("Removing device");
+
+                    Devcon.Remove(Constants.ScpToolkitScpVBusInterfaceGuid, instanceId);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.ScpVBusInfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver");
-                }
-
-                controller.SetMessage("Removing device");
-
-                Devcon.Remove(Constants.ScpToolkitScpVBusInterfaceGuid, instanceId);
-
-                try
-                {
-                    controller.SetMessage("Deleting device driver store copies");
-
-                    foreach (var path in DriverStore.ExistingDrivers.Where(d =>
-                                 d.Contains(Constants.ScpVBusInfName)))
-                        DriverStore.RemoveDriver(path);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver store copy");
-                }
-            }
+            });
 
             await Refresh();
 
@@ -345,43 +410,47 @@ namespace Legacinator
         {
             var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
-            var instance = 0;
-
-            while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock4InterfaceGuid, out _, out var instanceId,
-                       instance++, false))
+            await Task.Run(() =>
             {
-                var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
+                var instance = 0;
 
-                var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
-
-                try
+                while (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock4InterfaceGuid, out _,
+                           out var instanceId,
+                           instance++, false))
                 {
-                    controller.SetMessage("Deleting device driver");
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
+
+                    controller.SetMessage("Removing device");
+
+                    Devcon.Remove(Constants.ScpToolkitDualShock4InterfaceGuid, instanceId);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.ScpDualShock4InfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver");
-                }
-
-                controller.SetMessage("Removing device");
-
-                Devcon.Remove(Constants.ScpToolkitDualShock4InterfaceGuid, instanceId);
-
-                try
-                {
-                    controller.SetMessage("Deleting device driver store copies");
-
-                    foreach (var path in DriverStore.ExistingDrivers.Where(d =>
-                                 d.Contains(Constants.ScpDualShock4InfName)))
-                        DriverStore.RemoveDriver(path);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver store copy");
-                }
-            }
+            });
 
             await Refresh();
 
@@ -392,70 +461,73 @@ namespace Legacinator
         {
             var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
-            try
+            await Task.Run(() =>
             {
-                var key = Registry.LocalMachine.OpenSubKey(
-                    @"SYSTEM\CurrentControlSet\Control\Class\{745a17a0-74d3-11d0-b6fe-00a0c90f57da}", true);
-                var entries = key.GetValue("UpperFilters") is string[] filters
-                    ? new List<string>(filters)
-                    : new List<string>();
-                if (entries.Contains("HidGuardian"))
-                {
-                    entries.Remove("HidGuardian");
-                    key.SetValue("UpperFilters", entries.ToArray(), RegistryValueKind.MultiString);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Error while processing filters");
-            }
-
-            Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId,
-                out var instances);
-
-            foreach (var instanceId in instances)
-            {
-                Log.Information("Processing instance {Instance}", instanceId);
-
-                var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
-
-                var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
-
                 try
                 {
-                    controller.SetMessage("Deleting device driver");
-
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    var key = Registry.LocalMachine.OpenSubKey(
+                        @"SYSTEM\CurrentControlSet\Control\Class\{745a17a0-74d3-11d0-b6fe-00a0c90f57da}", true);
+                    var entries = key.GetValue("UpperFilters") is string[] filters
+                        ? new List<string>(filters)
+                        : new List<string>();
+                    if (entries.Contains("HidGuardian"))
+                    {
+                        entries.Remove("HidGuardian");
+                        key.SetValue("UpperFilters", entries.ToArray(), RegistryValueKind.MultiString);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Failed to delete driver");
+                    Log.Error(ex, "Error while processing filters");
                 }
 
-                controller.SetMessage("Removing device");
+                Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId,
+                    out var instances);
 
-                try
+                foreach (var instanceId in instances)
                 {
-                    Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to remove device");
-                }
+                    Log.Information("Processing instance {Instance}", instanceId);
 
-                try
-                {
-                    controller.SetMessage("Deleting device driver store copies");
+                    var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    foreach (var path in DriverStore.ExistingDrivers.Where(d =>
-                                 d.Contains(Constants.HidGuardianInfName)))
-                        DriverStore.RemoveDriver(path);
+                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver");
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver");
+                    }
+
+                    controller.SetMessage("Removing device");
+
+                    try
+                    {
+                        Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to remove device");
+                    }
+
+                    try
+                    {
+                        controller.SetMessage("Deleting device driver store copies");
+
+                        foreach (var path in DriverStore.ExistingDrivers.Where(d =>
+                                     d.Contains(Constants.HidGuardianInfName)))
+                            DriverStore.RemoveDriver(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Failed to delete driver store copy");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Failed to delete driver store copy");
-                }
-            }
+            });
 
             await Refresh();
 

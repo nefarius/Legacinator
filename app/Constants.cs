@@ -21,6 +21,8 @@ namespace Legacinator
         public const string ScpVBusInfName = "scpvbus.inf";
         
         public const string HidGuardianInfName = "HidGuardian.inf";
+        
+        public const string ViGEmBusInfName = "ViGEmBus.inf";
 
         public static Version ViGEmBusVersionLatest = new("1.17.333.0");
 
