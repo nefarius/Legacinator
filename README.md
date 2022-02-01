@@ -28,7 +28,7 @@ If you run the tool on a machine with legacy components, the window will fill up
 
 ![vmware_YnimgAtbM5.png](assets/vmware_YnimgAtbM5.png)
 
-Clicking them will open a link to online articles on how to get rid of them in a safe and supported way.
+Clicking them will either attempt an instant automatic fix or open a link to online articles on how to get rid of them in a safe and supported way.
 
 On a "clean" machine you simply get a success dialog:
 
