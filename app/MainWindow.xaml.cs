@@ -158,6 +158,15 @@ namespace Legacinator
 
                         ResultsPanel.Children.Add(tile);
                     }
+                    else
+                    {
+                        var tile = new ResultTile
+                        {
+                            Title = $"ViGEmBus Drivers (v{driverVersion}) found"
+                        };
+
+                        ResultsPanel.Children.Add(tile);
+                    }
                 }
                 catch
                 {
