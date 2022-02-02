@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Legacinator.Util.Web;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -35,6 +36,13 @@ namespace Legacinator
 
         private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (Updater.IsUpdateAvailable)
+            {
+                await this.ShowMessageAsync("Update available",
+                    "A newer version of the Legacinator is available, I'll now take you to the download site!");
+                Process.Start(@"https://github.com/nefarius/Legacinator/releases/latest");
+            }
+
             await Refresh();
         }
 
@@ -159,7 +167,7 @@ namespace Legacinator
                         ResultsPanel.Children.Add(tile);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Log.Error(ex, "Error during ViGEmBus Gen1 detection");
                 }
