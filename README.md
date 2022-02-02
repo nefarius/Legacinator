@@ -28,7 +28,11 @@ If you run the tool on a machine with legacy components, the window will fill up
 
 ![vmware_YnimgAtbM5.png](assets/vmware_YnimgAtbM5.png)
 
-Clicking them will either attempt an instant automatic fix or open a link to online articles on how to get rid of them in a safe and supported way.
+Clicking them will either attempt an instant automatic fix or open a link to online articles on how to get rid of them in a safe and supported way. A few more detection examples:
+
+![vmware_arnOT51Aon.png](assets/vmware_arnOT51Aon.png)
+
+![vmware_mSCDY29F9z.png](assets/vmware_mSCDY29F9z.png)
 
 On a "clean" machine you simply get a success dialog:
 
