@@ -180,9 +180,48 @@ namespace Legacinator
                 ResultsPanel.Children.Add(tile);
             }
 
+            //
+            // Scan for HidHide and check version
+            // 
+            if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidHideHardwareId, out var hhInstances))
+            {
+                try
+                {
+                    var virtualDevice = PnPDevice.GetDeviceByInstanceId(hhInstances.First(), DeviceLocationFlags.Phantom);
+
+                    var hardwareId = virtualDevice.GetProperty<string[]>(DevicePropertyDevice.HardwareIds).ToList().First();
+                    var driverVersion = new Version(virtualDevice.GetProperty<string>(DevicePropertyDevice.DriverVersion));
+
+                    if (hardwareId.Equals(Constants.HidHideHardwareId, StringComparison.OrdinalIgnoreCase)
+                        && driverVersion < Constants.HidHideVersionLatest)
+                    {
+                        var tile = new ResultTile
+                        {
+                            Title = $"Outdated HidHide Driver found (v{driverVersion})"
+                        };
+
+                        tile.Clicked += HidHideOutdatedOnClicked;
+
+                        ResultsPanel.Children.Add(tile);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error during HidHide detection");
+                }
+            }
+
             if (ResultsPanel.Children.Count == 0)
                 await this.ShowMessageAsync("All good",
                     "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+        }
+
+        private async void HidHideOutdatedOnClicked()
+        {
+            await this.ShowMessageAsync("Download update",
+                "I will now take you to the latest setup, simply download it and follow the steps to be up to date!");
+
+            Process.Start(@"https://github.com/ViGEm/HidHide/releases/latest");
         }
 
         private void HPForkViGEmBusOnClicked()

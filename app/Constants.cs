@@ -5,6 +5,8 @@ namespace Legacinator
     public static class Constants
     {
         public const string HidGuardianHardwareId = @"Root\HidGuardian";
+        
+        public const string HidHideHardwareId = @"Root\HidHide";
 
         public const string ViGemBusVersion1_14HardwareId = @"Root\ViGEmBus";
 
@@ -25,6 +27,8 @@ namespace Legacinator
         public const string ViGEmBusInfName = "ViGEmBus.inf";
 
         public static Version ViGEmBusVersionLatest = new("1.17.333.0");
+        
+        public static Version HidHideVersionLatest = new("1.1.50.0");
 
         public static Guid ViGEmBusGen1InterfaceGuid = new("{96E42B22-F5E9-42F8-B043-ED0F932F014F}");
 
