@@ -19,6 +19,11 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Authors>Benjamin Höglinger-Stelzer</Authors>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/nefarius/Legacinator</PackageProjectUrl>
+    <Description>The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of known legacy (outdated, potentially faulty) device drivers (leftovers from ScpToolkit, outdated ViGEmBus copies etc.) and provide a solution to the user.</Description>
+    <RepositoryUrl>https://github.com/nefarius/Legacinator</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="splash.png" />
