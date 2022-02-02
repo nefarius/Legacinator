@@ -12,6 +12,14 @@ Ever wondered why that darn game controller just won't show up in games, Steam o
 
 The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of known legacy (outdated, potentially faulty) device drivers (leftovers from [ScpToolkit](https://github.com/nefarius/ScpToolkit), outdated [ViGEmBus](https://github.com/ViGEm/ViGEmBus) copies etc.) and provide a solution to the user.
 
+## Features
+
+- Detects and removes drivers from [ScpToolkit](https://github.com/nefarius/ScpToolkit) installations
+- Detects and removes [HidGuardian](https://github.com/ViGEm/HidGuardian)
+- Detects and removes outdated versions of [ViGEmBus](https://github.com/ViGEm/ViGEmBus)
+- Detects and removes outdated versions of [HidHide](https://github.com/ViGEm/HidHide)
+- Detects the [HP fork of ViGEmBus from 2018](https://github.com/ViGEm/ViGEmBus/issues/99) and offers mitigation instructions
+
 ## Environment
 
 This tool was built for **Windows 10**. Anything lower might work but is not supported. Since .NET 4.8 ships with Windows, the tool should be ready to run once downloaded.
