@@ -159,8 +159,9 @@ namespace Legacinator
                         ResultsPanel.Children.Add(tile);
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Log.Error(ex, "Error during ViGEmBus Gen1 detection");
                 }
 
             //
