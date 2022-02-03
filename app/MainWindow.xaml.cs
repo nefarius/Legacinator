@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+#if !DEBUG
 using Legacinator.Util.Web;
+#endif
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -36,12 +38,14 @@ namespace Legacinator
 
         private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
+#if !DEBUG
             if (Updater.IsUpdateAvailable)
             {
                 await this.ShowMessageAsync("Update available",
                     "A newer version of the Legacinator is available, I'll now take you to the download site!");
-                Process.Start(@"https://github.com/nefarius/Legacinator/releases/latest");
+                Process.Start(Constants.LegacinatorReleasesUri);
             }
+#endif
 
             await Refresh();
         }
@@ -191,14 +195,17 @@ namespace Legacinator
             //
             // Scan for HidHide and check version
             // 
-            if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidHideHardwareId, out var hhInstances))
-            {
+            if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidHideHardwareId,
+                    out var hhInstances))
                 try
                 {
-                    var virtualDevice = PnPDevice.GetDeviceByInstanceId(hhInstances.First(), DeviceLocationFlags.Phantom);
+                    var virtualDevice =
+                        PnPDevice.GetDeviceByInstanceId(hhInstances.First(), DeviceLocationFlags.Phantom);
 
-                    var hardwareId = virtualDevice.GetProperty<string[]>(DevicePropertyDevice.HardwareIds).ToList().First();
-                    var driverVersion = new Version(virtualDevice.GetProperty<string>(DevicePropertyDevice.DriverVersion));
+                    var hardwareId = virtualDevice.GetProperty<string[]>(DevicePropertyDevice.HardwareIds).ToList()
+                        .First();
+                    var driverVersion =
+                        new Version(virtualDevice.GetProperty<string>(DevicePropertyDevice.DriverVersion));
 
                     if (hardwareId.Equals(Constants.HidHideHardwareId, StringComparison.OrdinalIgnoreCase)
                         && driverVersion < Constants.HidHideVersionLatest)
@@ -217,7 +224,6 @@ namespace Legacinator
                 {
                     Log.Error(ex, "Error during HidHide detection");
                 }
-            }
 
             if (ResultsPanel.Children.Count == 0)
                 await this.ShowMessageAsync("All good",
@@ -229,12 +235,12 @@ namespace Legacinator
             await this.ShowMessageAsync("Download update",
                 "I will now take you to the latest setup, simply download it and follow the steps to be up to date!");
 
-            Process.Start(@"https://github.com/ViGEm/HidHide/releases/latest");
+            Process.Start(Constants.HidHideReleasesUri);
         }
 
         private void HPForkViGEmBusOnClicked()
         {
-            Process.Start(@"https://github.com/ViGEm/ViGEmBus/issues/99");
+            Process.Start(Constants.HPForkSolutionUri);
         }
 
         private async void ViGEmBusGen1OutdatedOnClicked()
@@ -635,6 +641,11 @@ namespace Legacinator
             await Refresh();
 
             await controller.CloseAsync();
+        }
+
+        private void OpenGitHub(object sender, RoutedEventArgs e)
+        {
+            Process.Start(Constants.LegacinatorRepositoryUri);
         }
     }
 }

@@ -4,6 +4,14 @@ namespace Legacinator
 {
     public static class Constants
     {
+        public const string LegacinatorRepositoryUri = @"https://github.com/nefarius/Legacinator";
+
+        public const string LegacinatorReleasesUri = @"https://github.com/nefarius/Legacinator/releases/latest";
+        
+        public const string HidHideReleasesUri = @"https://github.com/ViGEm/HidHide/releases/latest";
+
+        public const string HPForkSolutionUri = @"https://github.com/ViGEm/ViGEmBus/issues/99";
+
         public const string HidGuardianHardwareId = @"Root\HidGuardian";
         
         public const string HidHideHardwareId = @"Root\HidHide";

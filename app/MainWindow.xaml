@@ -4,9 +4,20 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-                 Icon="floppy_disk_icon.ico" Loaded="MainWindow_OnLoaded"
+                 Icon="floppy_disk_icon.ico" ShowIconOnTitleBar="False"
+                 Loaded="MainWindow_OnLoaded"
                  Title="Nefarius' Legacinator" Height="440" Width="700">
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button Click="OpenGitHub" ToolTip="Open up the GitHub site">
+                <iconPacks:PackIconForkAwesome Width="22"
+                                          Height="22"
+                                          Kind="Github" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
     <Grid>
         <mah:MetroTabControl Margin="16">
             <mah:MetroTabItem Header="Detection">
