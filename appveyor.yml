@@ -24,14 +24,8 @@ artifacts:
 - path: 'bin**\*.exe'
 test: off
 deploy:
-  release: v$(APPVEYOR_BUILD_VERSION)
-  description: 'The Legacinator'
-  provider: GitHub
-  auth_token:
-    secure: GvOeZH3msooHWqoQj46UsLaojyMsnudmNdfEMUSJJfrIBuLwAYaMeI5FcxKSFVv7
-  artifact: /.*\.exe/
-  draft: false
-  prerelease: false
+- provider: Environment
+  name: GITHUB
   on:
     branch: master
     APPVEYOR_REPO_TAG: true
