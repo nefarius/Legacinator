@@ -28,8 +28,6 @@ This tool was built for **Windows 10**. Anything lower might work but is not sup
 
 👉 [Get the latest signed release from here](../../releases/latest).
 
-If you feel adventurous, you can [get the latest test build from here](https://buildbot.vigem.org/builds/Legacinator/master/). These may contain unaddressed issues and are not aimed at the greater public, use at your own risk.
-
 ## Usage examples
 
 If you run the tool on a machine with legacy components, the window will fill up with one or more tiles listing components found:
