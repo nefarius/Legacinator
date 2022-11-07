@@ -155,8 +155,8 @@ namespace Legacinator
                 {
                     var bus = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var hardwareId = bus.GetProperty<string[]>(DevicePropertyDevice.HardwareIds).ToList().First();
-                    var driverVersion = new Version(bus.GetProperty<string>(DevicePropertyDevice.DriverVersion));
+                    var hardwareId = bus.GetProperty<string[]>(DevicePropertyKey.Device_HardwareIds).ToList().First();
+                    var driverVersion = new Version(bus.GetProperty<string>(DevicePropertyKey.Device_DriverVersion));
 
                     if (hardwareId.Equals(Constants.ViGemBusVersion1_16HardwareId, StringComparison.OrdinalIgnoreCase)
                         && driverVersion < Constants.ViGEmBusVersionLatest)
@@ -202,10 +202,10 @@ namespace Legacinator
                     var virtualDevice =
                         PnPDevice.GetDeviceByInstanceId(hhInstances.First(), DeviceLocationFlags.Phantom);
 
-                    var hardwareId = virtualDevice.GetProperty<string[]>(DevicePropertyDevice.HardwareIds).ToList()
+                    var hardwareId = virtualDevice.GetProperty<string[]>(DevicePropertyKey.Device_HardwareIds).ToList()
                         .First();
                     var driverVersion =
-                        new Version(virtualDevice.GetProperty<string>(DevicePropertyDevice.DriverVersion));
+                        new Version(virtualDevice.GetProperty<string>(DevicePropertyKey.Device_DriverVersion));
 
                     if (hardwareId.Equals(Constants.HidHideHardwareId, StringComparison.OrdinalIgnoreCase)
                         && driverVersion < Constants.HidHideVersionLatest)
@@ -259,7 +259,7 @@ namespace Legacinator
 
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
@@ -319,7 +319,7 @@ namespace Legacinator
 
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
@@ -377,7 +377,7 @@ namespace Legacinator
                 {
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
@@ -428,7 +428,7 @@ namespace Legacinator
                 {
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
@@ -478,7 +478,7 @@ namespace Legacinator
                 {
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
@@ -529,7 +529,7 @@ namespace Legacinator
                 {
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
@@ -599,7 +599,7 @@ namespace Legacinator
 
                     var device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
 
-                    var infName = device.GetProperty<string>(DevicePropertyDevice.DriverInfPath);
+                    var infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
 
                     try
                     {
