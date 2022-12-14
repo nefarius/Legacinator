@@ -14,6 +14,9 @@ namespace Legacinator;
 
 public partial class MainWindow
 {
+	//
+	// Look for HidGuardian virtual device
+	// 
 	private void DetectHidGuardian()
 	{
 		if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
