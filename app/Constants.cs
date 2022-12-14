@@ -21,6 +21,8 @@ namespace Legacinator
         public const string ViGemBusVersion1_16HardwareId = @"Nefarius\ViGEmBus\Gen1";
 
         public const string ViGEmBusHPForkHardwareId = @"SWC\HPIC0004_ViGEmBus";
+        
+        public const string BthPS3HardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}";
 
         public const string ScpDualShock3InfName = "ds3controller.inf";
         
@@ -51,5 +53,7 @@ namespace Legacinator
         public static Guid ScpToolkitLibusbKDeviceClassGuid = new("{ecfb0cfd-74c4-4f52-bbf7-343461cd72ac}");
 
         public static Guid SystemDeviceClassGuid = new("{4d36e97d-e325-11ce-bfc1-08002be10318}");
+        
+        public static Guid BluetoothDeviceClassGuid = new("{e0cbf06c-cd8b-4647-bb8a-263b43f0f974}");
     }
 }
