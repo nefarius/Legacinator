@@ -59,77 +59,9 @@ public partial class MainWindow : MetroWindow
 		//
 		// Look for HidGuardian virtual device
 		// 
-		if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
-		{
-			var tile = new ResultTile
-			{
-				Title = "HidGuardian is installed"
-			};
+		DetectHidGuardian();
 
-			tile.Clicked += HidGuardianOnClicked;
-
-			ResultsPanel.Children.Add(tile);
-		}
-
-		//
-		// Look for SCP DS3 drivers
-		// 
-		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock3InterfaceGuid, out _, out _, 0, false))
-		{
-			var tile = new ResultTile
-			{
-				Title = "ScpToolkit Drivers for DualShock 3 found"
-			};
-
-			tile.Clicked += ScpDS3OnClicked;
-
-			ResultsPanel.Children.Add(tile);
-		}
-
-		//
-		// Look for SCP DS4 drivers
-		// 
-		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock4InterfaceGuid, out _, out _, 0, false))
-		{
-			var tile = new ResultTile
-			{
-				Title = "ScpToolkit Drivers for DualShock 4 found"
-			};
-
-			tile.Clicked += ScpDS4OnClicked;
-
-			ResultsPanel.Children.Add(tile);
-		}
-
-		//
-		// Look for SCP BTH drivers
-		// 
-		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitBluetoothDongleInterfaceGuid, out _, out _, 0, false))
-		{
-			var tile = new ResultTile
-			{
-				Title = "ScpToolkit Drivers for Bluetooth Host found"
-			};
-
-			tile.Clicked += ScpBthOnClicked;
-
-			ResultsPanel.Children.Add(tile);
-		}
-
-		//
-		// Look for SCPVBus
-		// 
-		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitScpVBusInterfaceGuid, out _, out _, 0, false))
-		{
-			var tile = new ResultTile
-			{
-				Title = "ScpToolkit Virtual Bus Driver found"
-			};
-
-			tile.Clicked += ScpVBusOnClicked;
-
-			ResultsPanel.Children.Add(tile);
-		}
+		DetectScpComponents();
 
 		//
 		// Look for old ViGEmBus (v1.14.x) virtual device
@@ -229,6 +161,7 @@ public partial class MainWindow : MetroWindow
 			await this.ShowMessageAsync("All good",
 				"Congratulations, seems like this system is free of any known problematic legacy drivers!");
 	}
+
 
 	private void OpenGitHub(object sender, RoutedEventArgs e)
 	{

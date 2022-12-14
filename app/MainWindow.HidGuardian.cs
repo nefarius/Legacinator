@@ -14,6 +14,21 @@ namespace Legacinator;
 
 public partial class MainWindow
 {
+	private void DetectHidGuardian()
+	{
+		if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
+		{
+			var tile = new ResultTile
+			{
+				Title = "HidGuardian is installed"
+			};
+
+			tile.Clicked += HidGuardianOnClicked;
+
+			ResultsPanel.Children.Add(tile);
+		}
+	}
+
 	private async void HidHideOutdatedOnClicked()
 	{
 		await this.ShowMessageAsync("Download update",

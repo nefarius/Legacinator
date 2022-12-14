@@ -11,6 +11,69 @@ namespace Legacinator;
 
 public partial class MainWindow
 {
+	private void DetectScpComponents()
+	{
+		//
+		// Look for SCP DS3 drivers
+		// 
+		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock3InterfaceGuid, out _, out _, 0, false))
+		{
+			var tile = new ResultTile
+			{
+				Title = "ScpToolkit Drivers for DualShock 3 found"
+			};
+
+			tile.Clicked += ScpDS3OnClicked;
+
+			ResultsPanel.Children.Add(tile);
+		}
+
+		//
+		// Look for SCP DS4 drivers
+		// 
+		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock4InterfaceGuid, out _, out _, 0, false))
+		{
+			var tile = new ResultTile
+			{
+				Title = "ScpToolkit Drivers for DualShock 4 found"
+			};
+
+			tile.Clicked += ScpDS4OnClicked;
+
+			ResultsPanel.Children.Add(tile);
+		}
+
+		//
+		// Look for SCP BTH drivers
+		// 
+		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitBluetoothDongleInterfaceGuid, out _, out _, 0, false))
+		{
+			var tile = new ResultTile
+			{
+				Title = "ScpToolkit Drivers for Bluetooth Host found"
+			};
+
+			tile.Clicked += ScpBthOnClicked;
+
+			ResultsPanel.Children.Add(tile);
+		}
+
+		//
+		// Look for SCPVBus
+		// 
+		if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitScpVBusInterfaceGuid, out _, out _, 0, false))
+		{
+			var tile = new ResultTile
+			{
+				Title = "ScpToolkit Virtual Bus Driver found"
+			};
+
+			tile.Clicked += ScpVBusOnClicked;
+
+			ResultsPanel.Children.Add(tile);
+		}
+	}
+
 	private async void ScpBthOnClicked()
 	{
 		var controller = await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
