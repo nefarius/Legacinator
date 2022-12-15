@@ -23,7 +23,7 @@ The Legacinator is a simple self-contained .NET 4.8 application that has one tas
 
 ## Environment
 
-This tool was built for **Windows 10**. Anything lower might work but is not supported. Since .NET 4.8 ships with Windows, the tool should be ready to run once downloaded.
+This tool was built for **Windows 10** or later. Anything lower might work but is not supported. Since .NET 4.8 ships with Windows, the tool should be ready to run once downloaded.
 
 ## Download
 
