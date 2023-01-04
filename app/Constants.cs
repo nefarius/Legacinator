@@ -22,7 +22,7 @@ namespace Legacinator
 
         public const string ViGEmBusHPForkHardwareId = @"SWC\HPIC0004_ViGEmBus";
         
-        public const string BthPS3HardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}";
+        public const string BthPS3HardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}_LOCALMFG&0000";
 
         public const string ScpDualShock3InfName = "ds3controller.inf";
         

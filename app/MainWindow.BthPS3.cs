@@ -38,6 +38,8 @@ public partial class MainWindow
 		{
 			try
 			{
+				Log.Information("Looking for filter registry value");
+
 				var key = Registry.LocalMachine.OpenSubKey(
 					@"SYSTEM\CurrentControlSet\Control\Class\{e0cbf06c-cd8b-4647-bb8a-263b43f0f974}", true);
 				var entries = key.GetValue("LowerFilters") is string[] filters
@@ -45,8 +47,12 @@ public partial class MainWindow
 					: new List<string>();
 				if (entries.Contains("BthPS3PSM"))
 				{
+					Log.Information("BthPS3PSM found");
+
 					entries.Remove("BthPS3PSM");
 					key.SetValue("LowerFilters", entries.ToArray(), RegistryValueKind.MultiString);
+
+					Log.Information("BthPS3PSM removed");
 				}
 			}
 			catch (Exception ex)
@@ -54,10 +60,16 @@ public partial class MainWindow
 				Log.Error(ex, "Error while processing filters");
 			}
 
+			Log.Information("Looking for profile driver service device node");
+
 			Devcon.FindInDeviceClassByHardwareId(Constants.BluetoothDeviceClassGuid, Constants.BthPS3HardwareId,
 				out var instances);
 
-			foreach (var instanceId in instances)
+			var nodes = instances.ToList();
+
+			Log.Information("Found {Count} profile driver service device node", nodes.Count);
+
+			foreach (var instanceId in nodes)
 			{
 				Log.Information("Processing instance {Instance}", instanceId);
 
