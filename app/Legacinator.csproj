@@ -38,7 +38,7 @@
     </PackageReference>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="4.11.0" />
-    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.6.213" />
+    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.8.228" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
