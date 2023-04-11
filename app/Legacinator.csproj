@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <ProjectGuid>{C0A643DF-772A-460F-99E8-4DD8090C8F38}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -38,7 +38,7 @@
     </PackageReference>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="4.11.0" />
-    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.8.228" />
+    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.9.255" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
