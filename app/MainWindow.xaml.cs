@@ -63,8 +63,6 @@ public partial class MainWindow : MetroWindow
 
 		DetectHidHide();
 
-		DetectBthPs3();
-
 		if (ResultsPanel.Children.Count == 0)
 			await this.ShowMessageAsync("All good",
 				"Congratulations, seems like this system is free of any known problematic legacy drivers!");
