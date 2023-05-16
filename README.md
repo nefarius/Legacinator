@@ -19,8 +19,6 @@ The Legacinator is a simple self-contained .NET 4.8 application that has one tas
 - Detects and removes outdated versions of [ViGEmBus](https://github.com/ViGEm/ViGEmBus)
 - Detects and removes outdated versions of [HidHide](https://github.com/ViGEm/HidHide)
 - Detects the [HP fork of ViGEmBus from 2018](https://github.com/ViGEm/ViGEmBus/issues/99) and offers mitigation instructions
-- ~~Detects and removes [BthPS3](https://github.com/ViGEm/BthPS3) drivers~~
-  - rolled back, doesn't work yet, oopsie
 
 ## Environment
 
