@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <ProjectGuid>{C0A643DF-772A-460F-99E8-4DD8090C8F38}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -32,14 +32,14 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="5.0.2" />
+    <PackageReference Include="ControlzEx" Version="6.0.0" />
     <PackageReference Include="Costura.Fody" Version="5.7.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="4.11.0" />
-    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.5.209" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.14.305" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
