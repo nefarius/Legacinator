@@ -32,7 +32,7 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="[5.0.2]" />
+    <PackageReference Include="ControlzEx" Version="[6.0.0]" />
     <PackageReference Include="Costura.Fody" Version="5.7.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
