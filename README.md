@@ -26,7 +26,7 @@ This tool was built for **Windows 10** or later. Anything lower might work but i
 
 ## Download
 
-👉 [Get the latest signed release from here](../../releases/latest).
+👉 [Get the latest signed release from here](../../releases/latest). Use at your own risk. No support provided whatsoever.
 
 ## Usage examples
 
