@@ -76,7 +76,7 @@ public partial class MainWindow
 		}
 	}
 
-	private void HPForkViGEmBusOnClicked()
+	private static void HPForkViGEmBusOnClicked()
 	{
 		Process.Start(Constants.HPForkSolutionUri);
 	}
