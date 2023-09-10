@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Legacinator
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class Constants
     {
         public const string LegacinatorRepositoryUri = @"https://github.com/nefarius/Legacinator";
@@ -36,9 +38,9 @@ namespace Legacinator
         
         public const string ViGEmBusInfName = "ViGEmBus.inf";
 
-        public static Version ViGEmBusVersionLatest = new("1.17.333.0");
+        public static readonly Version ViGEmBusVersionLatest = new("1.21.442.0");
         
-        public static Version HidHideVersionLatest = new("1.1.50.0");
+        public static readonly Version HidHideVersionLatest = new("1.2.128.0");
 
         public static Guid ViGEmBusGen1InterfaceGuid = new("{96E42B22-F5E9-42F8-B043-ED0F932F014F}");
 
