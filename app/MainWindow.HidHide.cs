@@ -51,6 +51,10 @@ public partial class MainWindow
                 Log.Error(ex, "Error during HidHide detection");
             }
         }
+        
+        //
+        // Check for old update server URL in updater agent config file
+        //
 
         RegistryKey hhRegKey = Registry.LocalMachine.OpenSubKey(Constants.HidHideRegistryPartialKey);
 
