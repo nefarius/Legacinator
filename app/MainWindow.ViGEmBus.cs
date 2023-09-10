@@ -29,11 +29,8 @@ public partial class MainWindow
         if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
                 Constants.ViGemBusVersion1_14HardwareId))
         {
-            ResultTile tile = new() { Title = "Deprecated ViGEmBus (pre-Gen1) Driver found" };
-
-            tile.Clicked += ViGEmBusPreGen1OnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("Deprecated ViGEmBus (pre-Gen1) Driver found",
+                ViGEmBusPreGen1OnClicked));
         }
 
         //
@@ -51,11 +48,8 @@ public partial class MainWindow
                 if (hardwareId.Equals(Constants.ViGemBusVersion1_16HardwareId, StringComparison.OrdinalIgnoreCase)
                     && driverVersion < Constants.ViGEmBusVersionLatest)
                 {
-                    ResultTile tile = new() { Title = $"Outdated ViGEmBus (Gen1) Driver found (v{driverVersion})" };
-
-                    tile.Clicked += ViGEmBusGen1OutdatedOnClicked;
-
-                    ResultsPanel.Children.Add(tile);
+                    ResultsPanel.Children.Add(CreateNewTile($"Outdated ViGEmBus (Gen1) Driver found (v{driverVersion})",
+                        ViGEmBusGen1OutdatedOnClicked));
                 }
             }
             catch (Exception ex)
@@ -70,11 +64,7 @@ public partial class MainWindow
         if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
                 Constants.ViGEmBusHPForkHardwareId))
         {
-            ResultTile tile = new() { Title = "HP Fork of ViGEmBus Driver found" };
-
-            tile.Clicked += HPForkViGEmBusOnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("HP Fork of ViGEmBus Driver found", HPForkViGEmBusOnClicked));
         }
 
         //
@@ -104,11 +94,8 @@ public partial class MainWindow
 
                         if (!updaterUrl.Equals(Constants.ViGEmBusUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
                         {
-                            ResultTile tile = new() { Title = "\u26a0\ufe0f Outdated ViGEmBus Updater Configuration found" };
-
-                            tile.Clicked += ViGEmBusUpdaterUrlOutdatedOnClicked;
-
-                            ResultsPanel.Children.Add(tile);
+                            ResultsPanel.Children.Add(CreateNewTile("Outdated ViGEmBus Updater Configuration found",
+                                ViGEmBusUpdaterUrlOutdatedOnClicked, true));
                         }
                     }
                 }

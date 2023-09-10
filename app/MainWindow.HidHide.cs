@@ -39,11 +39,8 @@ public partial class MainWindow
                 if (hardwareId.Equals(Constants.HidHideHardwareId, StringComparison.OrdinalIgnoreCase)
                     && driverVersion < Constants.HidHideVersionLatest)
                 {
-                    ResultTile tile = new() { Title = $"Outdated HidHide Driver found (v{driverVersion})" };
-
-                    tile.Clicked += HidHideOutdatedOnClicked;
-
-                    ResultsPanel.Children.Add(tile);
+                    ResultsPanel.Children.Add(CreateNewTile($"Outdated HidHide Driver found (v{driverVersion})",
+                        HidHideOutdatedOnClicked));
                 }
             }
             catch (Exception ex)
@@ -51,7 +48,7 @@ public partial class MainWindow
                 Log.Error(ex, "Error during HidHide detection");
             }
         }
-        
+
         //
         // Check for old update server URL in updater agent config file
         //
@@ -77,11 +74,8 @@ public partial class MainWindow
 
                         if (!updaterUrl.Equals(Constants.HidHideUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
                         {
-                            ResultTile tile = new() { Title = "\u26a0\ufe0f Outdated HidHide Updater Configuration found" };
-
-                            tile.Clicked += HidHideUpdaterUrlOutdatedOnClicked;
-
-                            ResultsPanel.Children.Add(tile);
+                            ResultsPanel.Children.Add(CreateNewTile("Outdated HidHide Updater Configuration found",
+                                HidHideUpdaterUrlOutdatedOnClicked, true));
                         }
                     }
                 }
@@ -106,7 +100,7 @@ public partial class MainWindow
 
         data["General"]["URL"] = Constants.HidHideUpdaterNewUrl;
         parser.WriteFile(updaterIniFilePath, data);
-        
+
         await Refresh();
     }
 

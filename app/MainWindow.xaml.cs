@@ -84,15 +84,15 @@ public partial class MainWindow : MetroWindow
         ResultTile tile = new() { Title = title, Margin = new Thickness(3) };
 
         tile.Clicked += onClicked;
-
-        tile.Content = new PackIconForkAwesome
+        
+        /*tile.Content = new PackIconForkAwesome
         {
             Width = 40,
             Height = 40,
             Kind = isCritical
                 ? PackIconForkAwesomeKind.Bomb
                 : PackIconForkAwesomeKind.Info
-        };
+        };*/
 
         return tile;
     }
