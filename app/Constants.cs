@@ -14,6 +14,13 @@ public static class Constants
 
     public const string HidHideUpdaterConfigFileName = "HidHide_Updater.ini";
 
+    
+    public const string ViGEmBusUpdaterLegacyUrl = "https://updates.vigem.org/api/github/ViGEm/ViGEmBus/updates";
+    public const string ViGEmBusUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/ViGEmBus/updates";
+    public const string ViGEmBusRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\ViGEm Bus Driver";
+    public const string ViGEmBusUpdaterConfigFileName = "ViGEmBus_Updater.ini";
+    
+    
     public const string LegacinatorRepositoryUri = @"https://github.com/nefarius/Legacinator";
 
 #if !DEBUG

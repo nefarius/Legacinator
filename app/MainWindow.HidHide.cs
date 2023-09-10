@@ -56,33 +56,40 @@ public partial class MainWindow
         // Check for old update server URL in updater agent config file
         //
 
-        RegistryKey hhRegKey = Registry.LocalMachine.OpenSubKey(Constants.HidHideRegistryPartialKey);
-
-        if (hhRegKey is not null)
+        try
         {
-            string installPath = hhRegKey.GetValue("Path") as string;
+            RegistryKey hhRegKey = Registry.LocalMachine.OpenSubKey(Constants.HidHideRegistryPartialKey);
 
-            if (!string.IsNullOrEmpty(installPath) && Directory.Exists(installPath))
+            if (hhRegKey is not null)
             {
-                string updaterIniFilePath = Path.Combine(installPath, Constants.HidHideUpdaterConfigFileName);
+                string installPath = hhRegKey.GetValue("Path") as string;
 
-                if (File.Exists(updaterIniFilePath))
+                if (!string.IsNullOrEmpty(installPath) && Directory.Exists(installPath))
                 {
-                    FileIniDataParser parser = new();
-                    IniData data = parser.ReadFile(updaterIniFilePath);
+                    string updaterIniFilePath = Path.Combine(installPath, Constants.HidHideUpdaterConfigFileName);
 
-                    string updaterUrl = data["General"]["URL"];
-
-                    if (!updaterUrl.Equals(Constants.HidHideUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
+                    if (File.Exists(updaterIniFilePath))
                     {
-                        ResultTile tile = new() { Title = "Outdated HidHide Updater Configuration found" };
+                        FileIniDataParser parser = new();
+                        IniData data = parser.ReadFile(updaterIniFilePath);
 
-                        tile.Clicked += HidHideUpdaterUrlOutdatedOnClicked;
+                        string updaterUrl = data["General"]["URL"];
 
-                        ResultsPanel.Children.Add(tile);
+                        if (!updaterUrl.Equals(Constants.HidHideUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
+                        {
+                            ResultTile tile = new() { Title = "\u26a0\ufe0f Outdated HidHide Updater Configuration found" };
+
+                            tile.Clicked += HidHideUpdaterUrlOutdatedOnClicked;
+
+                            ResultsPanel.Children.Add(tile);
+                        }
                     }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error during HidHide updater config file search");
         }
     }
 
