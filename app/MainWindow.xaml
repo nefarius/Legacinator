@@ -41,7 +41,7 @@
                 <TextBlock TextWrapping="Wrap"
                            TextAlignment="Justify"
                            Grid.Row="1">
-                    Copyright (c) 2022, Benjamin Höglinger-Stelzer<LineBreak />
+                    Copyright (c) 2022-2023, Benjamin Höglinger-Stelzer<LineBreak />
                     All rights reserved.<LineBreak />
                     <LineBreak />
                     Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:<LineBreak />
