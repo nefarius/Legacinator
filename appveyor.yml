@@ -1,9 +1,9 @@
 version: 1.2.{build}
 image: Visual Studio 2022
 configuration:
-- Release
+  - Release
 install:
-- cmd: git submodule -q update --init
+  - cmd: git submodule -q update --init
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -13,7 +13,7 @@ dotnet_csproj:
   file_version: '{version}'
   informational_version: '{version}'
 before_build:
-- nuget restore
+  - nuget restore
 skip_commits:
   files:
     - assets/*
@@ -21,11 +21,11 @@ skip_commits:
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\$(APPVEYOR_PROJECT_NAME).sln
 artifacts:
-- path: 'bin**\*.exe'
+  - path: 'bin**\*.exe'
 test: off
 deploy:
-- provider: Environment
-  name: GITHUB
-  on:
-    branch: master
-    APPVEYOR_REPO_TAG: true
+  - provider: Environment
+    name: GITHUB
+    on:
+      branch: master
+      APPVEYOR_REPO_TAG: true

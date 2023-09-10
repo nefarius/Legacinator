@@ -3,9 +3,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+
 using Nefarius.Utilities.DeviceManagement.PnP;
+
 using Serilog;
 #if !DEBUG
 using Legacinator.Util.Web;
@@ -18,22 +21,22 @@ namespace Legacinator;
 /// </summary>
 public partial class MainWindow : MetroWindow
 {
-	private static readonly string WinDir = Environment.GetEnvironmentVariable("WINDIR");
+    private static readonly string WinDir = Environment.GetEnvironmentVariable("WINDIR");
 
-	private static readonly string InfDir = Path.Combine(WinDir, "INF");
+    private static readonly string InfDir = Path.Combine(WinDir, "INF");
 
-	public MainWindow()
-	{
-		InitializeComponent();
+    public MainWindow()
+    {
+        InitializeComponent();
 
-		Log.Logger = new LoggerConfiguration()
-			.MinimumLevel.Debug()
-			.WriteTo.File("Legacinator.log")
-			.CreateLogger();
-	}
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File("Legacinator.log")
+            .CreateLogger();
+    }
 
-	private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-	{
+    private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+    {
 #if !DEBUG
             if (Updater.IsUpdateAvailable)
             {
@@ -43,33 +46,35 @@ public partial class MainWindow : MetroWindow
             }
 #endif
 
-		await Refresh();
-	}
+        await Refresh();
+    }
 
-	/// <summary>
-	///     Runs all detection routines.
-	/// </summary>
-	private async Task Refresh()
-	{
-		ResultsPanel.Children.Clear();
+    /// <summary>
+    ///     Runs all detection routines.
+    /// </summary>
+    private async Task Refresh()
+    {
+        ResultsPanel.Children.Clear();
 
-		Devcon.RefreshPhantom();
+        Devcon.RefreshPhantom();
 
-		DetectHidGuardian();
+        DetectHidGuardian();
 
-		DetectScpComponents();
+        DetectScpComponents();
 
-		DetectViGEmBus();
+        DetectViGEmBus();
 
-		DetectHidHide();
+        DetectHidHide();
 
-		if (ResultsPanel.Children.Count == 0)
-			await this.ShowMessageAsync("All good",
-				"Congratulations, seems like this system is free of any known problematic legacy drivers!");
-	}
+        if (ResultsPanel.Children.Count == 0)
+        {
+            await this.ShowMessageAsync("All good",
+                "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+        }
+    }
 
-	private void OpenGitHub(object sender, RoutedEventArgs e)
-	{
-		Process.Start(Constants.LegacinatorRepositoryUri);
-	}
+    private void OpenGitHub(object sender, RoutedEventArgs e)
+    {
+        Process.Start(Constants.LegacinatorRepositoryUri);
+    }
 }

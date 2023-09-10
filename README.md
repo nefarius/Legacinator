@@ -8,9 +8,14 @@ The one and only Legacinator.
 
 ## About
 
-Ever wondered why that darn game controller just won't show up in games, Steam or your favourite emulator? Machine crashes once you plug in a DualShock 3/4? Struggling with getting that lid off of your pickles jar? Well, I can't help you with that, but for the game controller issues, read on!
+Ever wondered why that darn game controller just won't show up in games, Steam or your favourite emulator? Machine
+crashes once you plug in a DualShock 3/4? Struggling with getting that lid off of your pickles jar? Well, I can't help
+you with that, but for the game controller issues, read on!
 
-The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of known legacy (outdated, potentially faulty) device drivers (leftovers from [ScpToolkit](https://github.com/nefarius/ScpToolkit), outdated [ViGEmBus](https://github.com/ViGEm/ViGEmBus) copies etc.) and provides a solution to the user.
+The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of
+known legacy (outdated, potentially faulty) device drivers (leftovers
+from [ScpToolkit](https://github.com/nefarius/ScpToolkit), outdated [ViGEmBus](https://github.com/ViGEm/ViGEmBus) copies
+etc.) and provides a solution to the user.
 
 ## Features
 
@@ -18,23 +23,28 @@ The Legacinator is a simple self-contained .NET 4.8 application that has one tas
 - Detects and removes [HidGuardian](https://github.com/ViGEm/HidGuardian)
 - Detects and removes outdated versions of [ViGEmBus](https://github.com/ViGEm/ViGEmBus)
 - Detects and removes outdated versions of [HidHide](https://github.com/ViGEm/HidHide)
-- Detects the [HP fork of ViGEmBus from 2018](https://github.com/ViGEm/ViGEmBus/issues/99) and offers mitigation instructions
+- Detects the [HP fork of ViGEmBus from 2018](https://github.com/ViGEm/ViGEmBus/issues/99) and offers mitigation
+  instructions
 
 ## Environment
 
-This tool was built for **Windows 10** or later. Anything lower might work but is not supported. Since .NET 4.8 ships with Windows, the tool should be ready to run once downloaded.
+This tool was built for **Windows 10** or later. Anything lower might work but is not supported. Since .NET 4.8 ships
+with Windows, the tool should be ready to run once downloaded.
 
 ## Download
 
-👉 [Get the latest signed release from here](../../releases/latest). Use at your own risk. No support provided whatsoever.
+👉 [Get the latest signed release from here](../../releases/latest). Use at your own risk. No support provided
+whatsoever.
 
 ## Usage examples
 
-If you run the tool on a machine with legacy components, the window will fill up with one or more tiles listing components found:
+If you run the tool on a machine with legacy components, the window will fill up with one or more tiles listing
+components found:
 
 ![vmware_YnimgAtbM5.png](assets/vmware_YnimgAtbM5.png)
 
-Clicking them will either attempt an instant automatic fix or open a link to online articles on how to get rid of them in a safe and supported way. A few more detection examples:
+Clicking them will either attempt an instant automatic fix or open a link to online articles on how to get rid of them
+in a safe and supported way. A few more detection examples:
 
 ![vmware_arnOT51Aon.png](assets/vmware_arnOT51Aon.png)
 
