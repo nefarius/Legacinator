@@ -6,9 +6,26 @@ namespace Legacinator;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public static class Constants
 {
+    public const string HidHideUpdaterLegacyUrl = "https://updates.vigem.org/api/github/ViGEm/HidHide/updates";
+
+    public const string HidHideUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/HidHide/updates";
+
+    public const string HidHideRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\HidHide";
+
+    public const string HidHideUpdaterConfigFileName = "HidHide_Updater.ini";
+
+    
+    public const string ViGEmBusUpdaterLegacyUrl = "https://updates.vigem.org/api/github/ViGEm/ViGEmBus/updates";
+    public const string ViGEmBusUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/ViGEmBus/updates";
+    public const string ViGEmBusRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\ViGEm Bus Driver";
+    public const string ViGEmBusUpdaterConfigFileName = "ViGEmBus_Updater.ini";
+    
+    
     public const string LegacinatorRepositoryUri = @"https://github.com/nefarius/Legacinator";
 
+#if !DEBUG
     public const string LegacinatorReleasesUri = @"https://github.com/nefarius/Legacinator/releases/latest";
+#endif
 
     public const string HidHideReleasesUri = @"https://github.com/ViGEm/HidHide/releases/latest";
 

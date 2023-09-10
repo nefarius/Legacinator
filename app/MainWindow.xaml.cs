@@ -6,6 +6,7 @@ using System.Windows;
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.IconPacks;
 
 using Nefarius.Utilities.DeviceManagement.PnP;
 
@@ -76,5 +77,12 @@ public partial class MainWindow : MetroWindow
     private void OpenGitHub(object sender, RoutedEventArgs e)
     {
         Process.Start(Constants.LegacinatorRepositoryUri);
+    }
+
+    private static CustomResultTile CreateNewTile(string title, Action onClicked, bool isCritical = false)
+    {
+        return new CustomResultTile(title, onClicked, isCritical
+            ? PackIconForkAwesomeKind.Bomb
+            : PackIconForkAwesomeKind.Info);
     }
 }
