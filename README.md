@@ -25,6 +25,7 @@ etc.) and provides a solution to the user.
 - Detects and removes outdated versions of [HidHide](https://github.com/ViGEm/HidHide)
 - Detects the [HP fork of ViGEmBus from 2018](https://github.com/ViGEm/ViGEmBus/issues/99) and offers mitigation
   instructions
+- Detects and fixes [outdated updater agent configuration](https://docs.nefarius.at/projects/ViGEm/End-of-Life/). 
 
 ## Environment
 
@@ -59,3 +60,4 @@ On a "clean" machine you simply get a success dialog:
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 - [Fody Costura](https://github.com/Fody/Costura)
 - [Nefarius.Utilities.DeviceManagement](https://github.com/nefarius/Nefarius.Utilities.DeviceManagement)
+- [INI File Parser](https://github.com/rickyah/ini-parser)
