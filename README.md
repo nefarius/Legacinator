@@ -2,7 +2,7 @@
 
 # Nefarius' Legacinator
 
-[![Build status](https://ci.appveyor.com/api/projects/status/03i0d6l2vgonx438?svg=true)](https://ci.appveyor.com/project/nefarius/legacinator) [![GitHub all releases](https://img.shields.io/github/downloads/Nefarius/Legacinator/total)](../../releases/latest)
+[![.NET](https://github.com/nefarius/Legacinator/actions/workflows/build.yml/badge.svg)](https://github.com/nefarius/Legacinator/actions/workflows/build.yml) [![GitHub all releases](https://img.shields.io/github/downloads/Nefarius/Legacinator/total)](../../releases/latest)
 
 The one and only Legacinator.
 
