@@ -33,14 +33,6 @@ public partial class MainWindow
         }
     }
 
-    private async void HidHideOutdatedOnClicked()
-    {
-        await this.ShowMessageAsync("Download update",
-            "I will now take you to the latest setup, simply download it and follow the steps to be up to date!");
-
-        Process.Start(Constants.HidHideReleasesUri);
-    }
-
     private async void HidGuardianOnClicked()
     {
         ProgressDialogController controller =
