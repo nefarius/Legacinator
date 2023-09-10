@@ -79,21 +79,10 @@ public partial class MainWindow : MetroWindow
         Process.Start(Constants.LegacinatorRepositoryUri);
     }
 
-    private static ResultTile CreateNewTile(string title, Action onClicked, bool isCritical = false)
+    private static CustomResultTile CreateNewTile(string title, Action onClicked, bool isCritical = false)
     {
-        ResultTile tile = new() { Title = title, Margin = new Thickness(3) };
-
-        tile.Clicked += onClicked;
-        
-        /*tile.Content = new PackIconForkAwesome
-        {
-            Width = 40,
-            Height = 40,
-            Kind = isCritical
-                ? PackIconForkAwesomeKind.Bomb
-                : PackIconForkAwesomeKind.Info
-        };*/
-
-        return tile;
+        return new CustomResultTile(title, onClicked, isCritical
+            ? PackIconForkAwesomeKind.Bomb
+            : PackIconForkAwesomeKind.Info);
     }
 }
