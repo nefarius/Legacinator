@@ -57,7 +57,7 @@ public static class Constants
 
     public static readonly Version ViGEmBusVersionLatest = new("1.21.442.0");
 
-    public static readonly Version HidHideVersionLatest = new("1.2.128.0");
+    public static readonly Version HidHideDriverVersionLatest = new("1.2.98.0");
 
     public static Guid ViGEmBusGen1InterfaceGuid = new("{96E42B22-F5E9-42F8-B043-ED0F932F014F}");
 

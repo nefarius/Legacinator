@@ -38,7 +38,7 @@ public partial class MainWindow
                 Version driverVersion = new(virtualDevice.GetProperty<string>(DevicePropertyKey.Device_DriverVersion));
 
                 if (hardwareId.Equals(Constants.HidHideHardwareId, StringComparison.OrdinalIgnoreCase)
-                    && driverVersion < Constants.HidHideVersionLatest)
+                    && driverVersion < Constants.HidHideDriverVersionLatest)
                 {
                     ResultsPanel.Children.Add(CreateNewTile($"Outdated HidHide Driver found (v{driverVersion})",
                         HidHideOutdatedOnClicked));
