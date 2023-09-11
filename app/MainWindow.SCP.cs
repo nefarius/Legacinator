@@ -69,6 +69,8 @@ public partial class MainWindow
                 try
                 {
                     controller.SetMessage("Deleting device driver");
+                    
+                    Log.Information("Deleting INF file {File}", infName);
 
                     Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
                 }
@@ -88,6 +90,8 @@ public partial class MainWindow
                     foreach (string path in DriverStore.ExistingDrivers.Where(d =>
                                  d.Contains(Constants.ScpBluetoothInfName)))
                     {
+                        Log.Information("Deleting driver store copy {Path}", path);
+                        
                         DriverStore.RemoveDriver(path);
                     }
                 }
@@ -123,6 +127,8 @@ public partial class MainWindow
                 try
                 {
                     controller.SetMessage("Deleting device driver");
+                    
+                    Log.Information("Deleting INF file {File}", infName);
 
                     Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
                 }
@@ -142,6 +148,8 @@ public partial class MainWindow
                     foreach (string path in DriverStore.ExistingDrivers.Where(d =>
                                  d.Contains(Constants.ScpDualShock3InfName)))
                     {
+                        Log.Information("Deleting driver store copy {Path}", path);
+                        
                         DriverStore.RemoveDriver(path);
                     }
                 }
@@ -177,6 +185,8 @@ public partial class MainWindow
                 {
                     controller.SetMessage("Deleting device driver");
 
+                    Log.Information("Deleting INF file {File}", infName);
+                    
                     Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
                 }
                 catch (Exception ex)
@@ -195,6 +205,8 @@ public partial class MainWindow
                     foreach (string path in DriverStore.ExistingDrivers.Where(d =>
                                  d.Contains(Constants.ScpVBusInfName)))
                     {
+                        Log.Information("Deleting driver store copy {Path}", path);
+                        
                         DriverStore.RemoveDriver(path);
                     }
                 }
@@ -230,6 +242,8 @@ public partial class MainWindow
                 try
                 {
                     controller.SetMessage("Deleting device driver");
+                    
+                    Log.Information("Deleting INF file {File}", infName);
 
                     Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
                 }
@@ -249,6 +263,8 @@ public partial class MainWindow
                     foreach (string path in DriverStore.ExistingDrivers.Where(d =>
                                  d.Contains(Constants.ScpDualShock4InfName)))
                     {
+                        Log.Information("Deleting driver store copy {Path}", path);
+                        
                         DriverStore.RemoveDriver(path);
                     }
                 }
