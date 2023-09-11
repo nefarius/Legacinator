@@ -25,11 +25,7 @@ public partial class MainWindow
     {
         if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
         {
-            ResultTile tile = new ResultTile { Title = "HidGuardian is installed" };
-
-            tile.Clicked += HidGuardianOnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("HidGuardian is installed", HidGuardianOnClicked));
         }
     }
 

@@ -21,11 +21,7 @@ public partial class MainWindow
         // 
         if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock3InterfaceGuid, out _, out _, 0, false))
         {
-            ResultTile tile = new ResultTile { Title = "ScpToolkit Drivers for DualShock 3 found" };
-
-            tile.Clicked += ScpDS3OnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("ScpToolkit Drivers for DualShock 3 found", ScpDS3OnClicked));
         }
 
         //
@@ -33,11 +29,7 @@ public partial class MainWindow
         // 
         if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitDualShock4InterfaceGuid, out _, out _, 0, false))
         {
-            ResultTile tile = new ResultTile { Title = "ScpToolkit Drivers for DualShock 4 found" };
-
-            tile.Clicked += ScpDS4OnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("ScpToolkit Drivers for DualShock 4 found", ScpDS4OnClicked));
         }
 
         //
@@ -45,11 +37,7 @@ public partial class MainWindow
         // 
         if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitBluetoothDongleInterfaceGuid, out _, out _, 0, false))
         {
-            ResultTile tile = new ResultTile { Title = "ScpToolkit Drivers for Bluetooth Host found" };
-
-            tile.Clicked += ScpBthOnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("ScpToolkit Drivers for Bluetooth Host found", ScpBthOnClicked));
         }
 
         //
@@ -57,11 +45,7 @@ public partial class MainWindow
         // 
         if (Devcon.FindByInterfaceGuid(Constants.ScpToolkitScpVBusInterfaceGuid, out _, out _, 0, false))
         {
-            ResultTile tile = new ResultTile { Title = "ScpToolkit Virtual Bus Driver found" };
-
-            tile.Clicked += ScpVBusOnClicked;
-
-            ResultsPanel.Children.Add(tile);
+            ResultsPanel.Children.Add(CreateNewTile("ScpToolkit Virtual Bus Driver found", ScpVBusOnClicked));
         }
     }
 
