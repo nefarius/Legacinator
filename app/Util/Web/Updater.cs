@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -21,11 +20,12 @@ public static class Updater
     ///     Gets the control application version.
     /// </summary>
     private static Version AssemblyVersion => Assembly.GetEntryAssembly()!.GetFileVersion();
-
+    
     /// <summary>
-    ///     Gets the releases API URI.
+    ///     Fetches the latest release.
     /// </summary>
-    private static Uri ReleasesUri => new("https://api.github.com/repos/nefarius/Legacinator/releases");
+    private static Uri LatestReleaseUrl =>
+        new("https://aiu.api.nefarius.systems/api/github/nefarius/Legacinator/updates?asJson=true&allowAny=true");
 
     /// <summary>
     ///     True if tag on latest GitHub release is newer than own assembly version, false otherwise.
@@ -40,20 +40,16 @@ public static class Updater
                 using WebClient client = new();
                 Log.Information("Checking for updates, preparing web request");
 
+                string ua = $"{typeof(MainWindow).Assembly.GetName().Name}/{AssemblyVersion}";
+
                 // Required or result is HTTP-403
-                client.Headers["User-Agent"] =
-                    "Mozilla/4.0 (Compatible; Windows NT 5.1; MSIE 6.0) " +
-                    "(compatible; MSIE 6.0; Windows NT 5.1; " +
-                    ".NET CLR 1.1.4322; .NET CLR 2.0.50727)";
+                client.Headers["User-Agent"] = ua;
 
                 // Get body
-                string response = client.DownloadString(ReleasesUri);
+                string response = client.DownloadString(LatestReleaseUrl);
 
-                // Get JSON objects
-                IList<Root> result = JsonConvert.DeserializeObject<IList<Root>>(response);
-
-                // Top release is latest of interest
-                Root latest = result.FirstOrDefault();
+                // Get get latest release
+                Release latest = JsonConvert.DeserializeObject<Release>(response);
 
                 // No release found to compare to, bail out
                 if (latest == null)

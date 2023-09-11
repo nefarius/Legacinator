@@ -162,7 +162,7 @@ public class Asset
     public string BrowserDownloadUrl { get; set; }
 }
 
-public class Root
+public class Release
 {
     [JsonProperty("url")]
     public string Url { get; set; }
