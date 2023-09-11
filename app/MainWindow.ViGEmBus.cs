@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using IniParser;
@@ -88,7 +89,7 @@ public partial class MainWindow
                     if (File.Exists(updaterIniFilePath))
                     {
                         FileIniDataParser parser = new();
-                        IniData data = parser.ReadFile(updaterIniFilePath);
+                        IniData data = parser.ReadFile(updaterIniFilePath, new UTF8Encoding(false));
 
                         string updaterUrl = data["General"]["URL"];
 
@@ -118,10 +119,10 @@ public partial class MainWindow
         string updaterIniFilePath = Path.Combine(installPath!, Constants.ViGEmBusUpdaterConfigFileName);
 
         FileIniDataParser parser = new();
-        IniData data = parser.ReadFile(updaterIniFilePath);
+        IniData data = parser.ReadFile(updaterIniFilePath, new UTF8Encoding(false));
 
         data["General"]["URL"] = Constants.ViGEmBusUpdaterNewUrl;
-        parser.WriteFile(updaterIniFilePath, data);
+        parser.WriteFile(updaterIniFilePath, data, new UTF8Encoding(false));
 
         await Refresh();
     }
