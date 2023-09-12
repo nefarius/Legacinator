@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Legacinator;
@@ -14,13 +15,13 @@ public static class Constants
 
     public const string HidHideUpdaterConfigFileName = "HidHide_Updater.ini";
 
-    
+
     public const string ViGEmBusUpdaterLegacyUrl = "https://updates.vigem.org/api/github/ViGEm/ViGEmBus/updates";
     public const string ViGEmBusUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/ViGEmBus/updates";
     public const string ViGEmBusRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\ViGEm Bus Driver";
     public const string ViGEmBusUpdaterConfigFileName = "ViGEmBus_Updater.ini";
-    
-    
+
+
     public const string LegacinatorRepositoryUri = @"https://github.com/nefarius/Legacinator";
 
 #if !DEBUG
@@ -50,6 +51,15 @@ public static class Constants
     public const string ScpBluetoothInfName = "bluetoothhost.inf";
 
     public const string ScpVBusInfName = "scpvbus.inf";
+
+    public static readonly List<string> ScpInfAllowedNames = new()
+    {
+        "oem",
+        ScpDualShock3InfName,
+        ScpDualShock4InfName,
+        ScpBluetoothInfName,
+        ScpVBusInfName
+    };
 
     public const string HidGuardianInfName = "HidGuardian.inf";
 
