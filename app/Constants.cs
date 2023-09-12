@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Legacinator;
 
@@ -52,7 +53,7 @@ public static class Constants
 
     public const string ScpVBusInfName = "scpvbus.inf";
 
-    public static readonly List<string> ScpInfAllowedNames = new()
+    private static readonly List<string> ScpInfAllowedNames = new()
     {
         "oem",
         ScpDualShock3InfName,
@@ -60,6 +61,11 @@ public static class Constants
         ScpBluetoothInfName,
         ScpVBusInfName
     };
+
+    public static bool IsAllowedScpInf(string infName)
+    {
+        return ScpInfAllowedNames.Any(allowedName => infName.ToLower().Contains(allowedName.ToLower()));
+    }
 
     public const string HidGuardianInfName = "HidGuardian.inf";
 

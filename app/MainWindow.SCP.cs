@@ -69,10 +69,17 @@ public partial class MainWindow
                 try
                 {
                     controller.SetMessage("Deleting device driver");
-                    
-                    Log.Information("Deleting INF file {File}", infName);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    if (Constants.IsAllowedScpInf(infName))
+                    {
+                        Log.Information("Deleting INF file {File}", infName);
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    else
+                    {
+                        Log.Warning("INF file {File} doesn't match allow-list, skipping removal", infName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -91,7 +98,7 @@ public partial class MainWindow
                                  d.Contains(Constants.ScpBluetoothInfName)))
                     {
                         Log.Information("Deleting driver store copy {Path}", path);
-                        
+
                         DriverStore.RemoveDriver(path);
                     }
                 }
@@ -127,10 +134,17 @@ public partial class MainWindow
                 try
                 {
                     controller.SetMessage("Deleting device driver");
-                    
-                    Log.Information("Deleting INF file {File}", infName);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    if (Constants.IsAllowedScpInf(infName))
+                    {
+                        Log.Information("Deleting INF file {File}", infName);
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    else
+                    {
+                        Log.Warning("INF file {File} doesn't match allow-list, skipping removal", infName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -149,7 +163,7 @@ public partial class MainWindow
                                  d.Contains(Constants.ScpDualShock3InfName)))
                     {
                         Log.Information("Deleting driver store copy {Path}", path);
-                        
+
                         DriverStore.RemoveDriver(path);
                     }
                 }
@@ -185,9 +199,16 @@ public partial class MainWindow
                 {
                     controller.SetMessage("Deleting device driver");
 
-                    Log.Information("Deleting INF file {File}", infName);
-                    
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    if (Constants.IsAllowedScpInf(infName))
+                    {
+                        Log.Information("Deleting INF file {File}", infName);
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    else
+                    {
+                        Log.Warning("INF file {File} doesn't match allow-list, skipping removal", infName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -206,7 +227,7 @@ public partial class MainWindow
                                  d.Contains(Constants.ScpVBusInfName)))
                     {
                         Log.Information("Deleting driver store copy {Path}", path);
-                        
+
                         DriverStore.RemoveDriver(path);
                     }
                 }
@@ -242,10 +263,17 @@ public partial class MainWindow
                 try
                 {
                     controller.SetMessage("Deleting device driver");
-                    
-                    Log.Information("Deleting INF file {File}", infName);
 
-                    Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    if (Constants.IsAllowedScpInf(infName))
+                    {
+                        Log.Information("Deleting INF file {File}", infName);
+
+                        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                    }
+                    else
+                    {
+                        Log.Warning("INF file {File} doesn't match allow-list, skipping removal", infName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -264,7 +292,7 @@ public partial class MainWindow
                                  d.Contains(Constants.ScpDualShock4InfName)))
                     {
                         Log.Information("Deleting driver store copy {Path}", path);
-                        
+
                         DriverStore.RemoveDriver(path);
                     }
                 }
