@@ -51,6 +51,8 @@ public partial class MainWindow
 
     private async void ScpBthOnClicked()
     {
+        Log.Information($"{nameof(ScpBthOnClicked)} selected");
+        
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
@@ -116,6 +118,8 @@ public partial class MainWindow
 
     private async void ScpDS3OnClicked()
     {
+        Log.Information($"{nameof(ScpDS3OnClicked)} selected");
+        
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
@@ -181,6 +185,8 @@ public partial class MainWindow
 
     private async void ScpVBusOnClicked()
     {
+        Log.Information($"{nameof(ScpVBusOnClicked)} selected");
+        
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
@@ -245,6 +251,8 @@ public partial class MainWindow
 
     private async void ScpDS4OnClicked()
     {
+        Log.Information($"{nameof(ScpDS4OnClicked)} selected");
+        
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
