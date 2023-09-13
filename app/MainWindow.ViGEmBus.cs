@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using IniParser;
+using IniParser.Exceptions;
 using IniParser.Model;
 
 using MahApps.Metro.Controls.Dialogs;
@@ -102,14 +103,60 @@ public partial class MainWindow
                 }
             }
         }
+        catch (ParsingException)
+        {
+            Log.Warning("ViGEmBus updater config file corrupt");
+
+            ResultsPanel.Children.Add(CreateNewTile("Corrupted ViGEmBus Updater Configuration found",
+                ViGEmBusUpdaterCorruptOnClicked, true));
+        }
         catch (Exception ex)
         {
             Log.Error(ex, "Error during ViGEmBus updater config file search");
         }
     }
 
+    private async void ViGEmBusUpdaterCorruptOnClicked()
+    {
+        Log.Information($"{nameof(ViGEmBusUpdaterCorruptOnClicked)} invoked");
+
+        using RegistryKey view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+            RegistryView.Registry32);
+        RegistryKey hhRegKey = view32.OpenSubKey(Constants.ViGEmBusRegistryPartialKey);
+
+        string installPath = hhRegKey!.GetValue("Path") as string;
+
+        string updaterIniFilePath = Path.Combine(installPath!, Constants.ViGEmBusUpdaterConfigFileName);
+
+        const string healthyIniContent = $$"""
+                                           [General]
+                                           Flags=PerMachine|ShowConfigOptionsButton
+                                           AppDir=C:\Program Files\Nefarius Software Solutions\ViGEm Bus Driver\
+                                           ApplicationName=ViGEm Bus Driver
+                                           CompanyName=Nefarius Software Solutions e.U.
+                                           ApplicationVersion=1.21.442
+                                           DefaultCommandLine=/checknow
+                                           CheckFrequency=2
+                                           DownloadsFolder=C:\ProgramData\Nefarius Software Solutions e.U.\ViGEm Bus Driver\updates\
+                                           ID={67175F6C-AA18-43A7-AE60-2FC3FD10BF79}
+                                           URL={{Constants.ViGEmBusUpdaterNewUrl}}
+                                           """;
+
+        using MemoryStream healthyIniContentStream = new(Encoding.UTF8.GetBytes(healthyIniContent));
+        using StreamReader streamReader = new(healthyIniContentStream);
+
+        FileIniDataParser parser = new();
+        IniData data = parser.ReadData(streamReader);
+
+        parser.WriteFile(updaterIniFilePath, data, new UTF8Encoding(false));
+
+        await Refresh();
+    }
+
     private async void ViGEmBusUpdaterUrlOutdatedOnClicked()
     {
+        Log.Information($"{nameof(ViGEmBusUpdaterUrlOutdatedOnClicked)} invoked");
+        
         using RegistryKey view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
             RegistryView.Registry32);
         RegistryKey hhRegKey = view32.OpenSubKey(Constants.ViGEmBusRegistryPartialKey);

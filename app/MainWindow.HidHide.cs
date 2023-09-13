@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 
 using IniParser;
+using IniParser.Exceptions;
 using IniParser.Model;
 
 using MahApps.Metro.Controls.Dialogs;
@@ -82,10 +83,54 @@ public partial class MainWindow
                 }
             }
         }
+        catch (ParsingException)
+        {
+            Log.Warning("HidHide updater config file corrupt");
+
+            ResultsPanel.Children.Add(CreateNewTile("Corrupted HidHide Updater Configuration found",
+                HidHideBusUpdaterCorruptOnClicked, true));
+        }
         catch (Exception ex)
         {
             Log.Error(ex, "Error during HidHide updater config file search");
         }
+    }
+
+    private async void HidHideBusUpdaterCorruptOnClicked()
+    {
+        Log.Information($"{nameof(HidHideBusUpdaterCorruptOnClicked)} invoked");
+
+        using RegistryKey view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+            RegistryView.Registry32);
+        RegistryKey hhRegKey = view32.OpenSubKey(Constants.HidHideRegistryPartialKey);
+
+        string installPath = hhRegKey!.GetValue("Path") as string;
+
+        string updaterIniFilePath = Path.Combine(installPath!, Constants.HidHideUpdaterConfigFileName);
+
+        const string healthyIniContent = $$"""
+                                           [General]
+                                           Flags = PerMachine|ShowConfigOptionsButton
+                                           AppDir = C:\Program Files\Nefarius Software Solutions\HidHide\
+                                           ApplicationName = HidHide
+                                           CompanyName = Nefarius Software Solutions e.U.
+                                           ApplicationVersion = 1.2.128
+                                           DefaultCommandLine = /checknow
+                                           CheckFrequency = 2
+                                           DownloadsFolder = C:\ProgramData\Nefarius Software Solutions e.U.\HidHide\updates\
+                                           ID = {8822CC70-E2A5-4CB7-8F14-E27101150A1D}
+                                           URL = {{Constants.HidHideUpdaterNewUrl}}
+                                           """;
+
+        using MemoryStream healthyIniContentStream = new(Encoding.UTF8.GetBytes(healthyIniContent));
+        using StreamReader streamReader = new(healthyIniContentStream);
+
+        FileIniDataParser parser = new();
+        IniData data = parser.ReadData(streamReader);
+
+        parser.WriteFile(updaterIniFilePath, data, new UTF8Encoding(false));
+
+        await Refresh();
     }
 
     private async void HidHideUpdaterUrlOutdatedOnClicked()
