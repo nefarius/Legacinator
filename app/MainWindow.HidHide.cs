@@ -100,9 +100,7 @@ public partial class MainWindow
     {
         Log.Information($"{nameof(HidHideBusUpdaterCorruptOnClicked)} invoked");
 
-        using RegistryKey view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
-            RegistryView.Registry32);
-        RegistryKey hhRegKey = view32.OpenSubKey(Constants.HidHideRegistryPartialKey);
+        RegistryKey hhRegKey = Registry.LocalMachine.OpenSubKey(Constants.HidHideRegistryPartialKey);
 
         string installPath = hhRegKey!.GetValue("Path") as string;
 
