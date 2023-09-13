@@ -8,20 +8,38 @@ namespace Legacinator;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public static class Constants
 {
+    #region HidHide
+
     public const string HidHideUpdaterLegacyUrl = "https://updates.vigem.org/api/github/ViGEm/HidHide/updates";
-
     public const string HidHideUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/HidHide/updates";
-
     public const string HidHideRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\HidHide";
-
     public const string HidHideUpdaterConfigFileName = "HidHide_Updater.ini";
+    public const string HidHideReleasesUri = @"https://github.com/ViGEm/HidHide/releases/latest";
 
+    #endregion
+
+    #region BthPS3
+
+    public const string BthPS3HardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}_LOCALMFG&0000";
+    public const string BthPS3RegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\BthPS3 Bluetooth Drivers";
+    public const string BthPS3UpdaterConfigFileName = "BthPS3Updater.ini";
+    public const string BthPS3UpdaterLegacyUrl = "https://test.updates.vigem.org/nss/products/bthps3/updates.txt";
+    public const string BthPS3LatestReleaseUri = @"https://github.com/nefarius/BthPS3/releases/latest";
+    public const string BthPS3UpdaterScheduledTaskName = "BthPS3Updater";
+    
+    #endregion
+
+    #region ViGEmBus
 
     public const string ViGEmBusUpdaterLegacyUrl = "https://updates.vigem.org/api/github/ViGEm/ViGEmBus/updates";
     public const string ViGEmBusUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/ViGEmBus/updates";
     public const string ViGEmBusRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\ViGEm Bus Driver";
     public const string ViGEmBusUpdaterConfigFileName = "ViGEmBus_Updater.ini";
+    public const string ViGemBusVersion1_14HardwareId = @"Root\ViGEmBus";
+    public const string ViGemBusVersion1_16HardwareId = @"Nefarius\ViGEmBus\Gen1";
+    public const string ViGEmBusHPForkHardwareId = @"SWC\HPIC0004_ViGEmBus";
 
+    #endregion
 
     public const string LegacinatorRepositoryUri = @"https://github.com/nefarius/Legacinator";
 
@@ -29,21 +47,13 @@ public static class Constants
     public const string LegacinatorReleasesUri = @"https://github.com/nefarius/Legacinator/releases/latest";
 #endif
 
-    public const string HidHideReleasesUri = @"https://github.com/ViGEm/HidHide/releases/latest";
+    
 
     public const string HPForkSolutionUri = @"https://github.com/ViGEm/ViGEmBus/issues/99";
 
     public const string HidGuardianHardwareId = @"Root\HidGuardian";
 
     public const string HidHideHardwareId = @"Root\HidHide";
-
-    public const string ViGemBusVersion1_14HardwareId = @"Root\ViGEmBus";
-
-    public const string ViGemBusVersion1_16HardwareId = @"Nefarius\ViGEmBus\Gen1";
-
-    public const string ViGEmBusHPForkHardwareId = @"SWC\HPIC0004_ViGEmBus";
-
-    public const string BthPS3HardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}_LOCALMFG&0000";
 
     public const string ScpDualShock3InfName = "ds3controller.inf";
 

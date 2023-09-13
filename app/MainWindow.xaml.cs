@@ -66,6 +66,8 @@ public partial class MainWindow : MetroWindow
         DetectViGEmBus();
 
         DetectHidHide();
+        
+        DetectBthPS3();
 
         if (ResultsPanel.Children.Count == 0)
         {
