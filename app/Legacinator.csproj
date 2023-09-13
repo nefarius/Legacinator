@@ -15,7 +15,7 @@
         <Version>1.0.0</Version>
     </PropertyGroup>
     <PropertyGroup>
-        <ApplicationIcon>floppy_disk_icon.ico</ApplicationIcon>
+        <ApplicationIcon>logo.ico</ApplicationIcon>
     </PropertyGroup>
     <PropertyGroup>
         <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -51,9 +51,12 @@
     </ItemGroup>
     <ItemGroup>
         <Resource Include="FodyWeavers.xml"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="floppy_disk_icon.ico"/>
+        <None Remove="logo.ico" />
+        <Resource Include="logo.ico" />
+        <None Remove="logo-1024x1024.png" />
+        <Resource Include="logo-1024x1024.png" />
+        <None Remove="logo-128x128.png" />
+        <Resource Include="logo-128x128.png" />
     </ItemGroup>
     <ItemGroup>
         <SplashScreen Include="splash.png"/>
