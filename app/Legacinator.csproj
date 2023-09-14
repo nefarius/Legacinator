@@ -56,9 +56,7 @@
         <None Remove="logo-1024x1024.png" />
         <None Remove="logo-128x128.png" />
     </ItemGroup>
-    <!--
     <ItemGroup>
         <SplashScreen Include="splash.png"/>
     </ItemGroup>
-    -->
 </Project>
