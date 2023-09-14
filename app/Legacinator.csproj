@@ -58,7 +58,9 @@
         <None Remove="logo-128x128.png" />
         <Resource Include="logo-128x128.png" />
     </ItemGroup>
+    <!--
     <ItemGroup>
         <SplashScreen Include="splash.png"/>
     </ItemGroup>
+    -->
 </Project>
