@@ -54,9 +54,7 @@
         <None Remove="logo.ico" />
         <Resource Include="logo.ico" />
         <None Remove="logo-1024x1024.png" />
-        <Resource Include="logo-1024x1024.png" />
         <None Remove="logo-128x128.png" />
-        <Resource Include="logo-128x128.png" />
     </ItemGroup>
     <!--
     <ItemGroup>
