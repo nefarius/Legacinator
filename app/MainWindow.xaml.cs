@@ -175,6 +175,8 @@ public partial class MainWindow : MetroWindow
                         await this.ShowMessageAsync("Update finished",
                             "Everything finished successfully."
                         );
+                        
+                        Application.Current.Shutdown(0);
                     }
                     catch (Exception ex)
                     {
@@ -185,9 +187,9 @@ public partial class MainWindow : MetroWindow
                         await this.ShowMessageAsync("Unexpected error",
                             "One or more operations failed, please try again or contact support. Sorry!"
                         );
+                        
+                        Application.Current.Shutdown(-2);
                     }
-
-                    Application.Current.Shutdown(0);
                 });
             }, cts.Token);
         }
