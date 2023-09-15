@@ -111,26 +111,30 @@ public partial class MainWindow : MetroWindow
             {
                 Log.Logger.Information("Phantom device refreshing done");
 
-                DetectHidGuardian();
-
-                DetectScpComponents();
-
-                DetectViGEmBus();
-
-                DetectHidHide();
-
-                DetectBthPS3();
-
-                if (ResultsPanel.Children.Count == 0)
+                // run this fun on UI thread
+                await Dispatcher.Invoke(async () =>
                 {
-                    await this.ShowMessageAsync("All good",
-                        "Congratulations, seems like this system is free of any known problematic legacy drivers!");
-                }
+                    DetectHidGuardian();
 
-                Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
-                    ResultsPanel.Children.Count);
+                    DetectScpComponents();
 
-                await controller.CloseAsync();
+                    DetectViGEmBus();
+
+                    DetectHidHide();
+
+                    DetectBthPS3();
+
+                    if (ResultsPanel.Children.Count == 0)
+                    {
+                        await this.ShowMessageAsync("All good",
+                            "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+                    }
+
+                    Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
+                        ResultsPanel.Children.Count);
+
+                    await controller.CloseAsync();
+                });
             }, cts.Token);
         }
         catch (TaskCanceledException)
