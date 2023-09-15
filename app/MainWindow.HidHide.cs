@@ -23,6 +23,8 @@ public partial class MainWindow
 {
     private void DetectHidHide()
     {
+        Log.Logger.Information("Running HidHide detection");
+        
         //
         // Scan for HidHide and check version
         // 
@@ -94,6 +96,8 @@ public partial class MainWindow
         {
             Log.Error(ex, "Error during HidHide updater config file search");
         }
+        
+        Log.Logger.Information("Done");
     }
 
     private async void HidHideBusUpdaterCorruptOnClicked()

@@ -22,6 +22,8 @@ public partial class MainWindow
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     private void DetectBthPS3()
     {
+        Log.Logger.Information("Running BthPS3 detection");
+        
         //
         // Check for old update server URL in updater agent config file (<= v1.2.4)
         //
@@ -67,6 +69,8 @@ public partial class MainWindow
         {
             Log.Error(ex, "Error during BthPS3 updater config file search");
         }
+        
+        Log.Logger.Information("Done");
     }
 
     private async void BthPS3UpdaterOutdatedOnClicked()

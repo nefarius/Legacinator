@@ -25,6 +25,8 @@ public partial class MainWindow
 {
     private void DetectViGEmBus()
     {
+        Log.Logger.Information("Running ViGEmBus detection");
+        
         //
         // Look for old ViGEmBus (v1.14.x) virtual device
         // 
@@ -114,6 +116,8 @@ public partial class MainWindow
         {
             Log.Error(ex, "Error during ViGEmBus updater config file search");
         }
+        
+        Log.Logger.Information("Done");
     }
 
     private async void ViGEmBusUpdaterCorruptOnClicked()

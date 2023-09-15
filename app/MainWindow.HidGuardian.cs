@@ -23,10 +23,14 @@ public partial class MainWindow
     // 
     private void DetectHidGuardian()
     {
+        Log.Logger.Information("Running HidGuardian detection");
+        
         if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
         {
             ResultsPanel.Children.Add(CreateNewTile("HidGuardian is installed", HidGuardianOnClicked));
         }
+        
+        Log.Logger.Information("Done");
     }
 
     private async void HidGuardianOnClicked()

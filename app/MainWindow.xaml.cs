@@ -38,6 +38,8 @@ public partial class MainWindow : MetroWindow
 
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
+        Log.Logger.Information("Running with parent process: {Parent}", ParentProcessUtilities.GetParentProcess());
+        
 #if !DEBUG
             if (Updater.IsUpdateAvailable)
             {
@@ -46,6 +48,8 @@ public partial class MainWindow : MetroWindow
                 Process.Start(Constants.LegacinatorReleasesUri);
             }
 #endif
+        
+        Log.Logger.Information("Starting complete scan");
 
         await Refresh();
     }
@@ -55,9 +59,15 @@ public partial class MainWindow : MetroWindow
     /// </summary>
     private async Task Refresh()
     {
+        Log.Logger.Information("Starting refresh of all component detection");
+        
         ResultsPanel.Children.Clear();
 
+        Log.Logger.Information("Refreshing phantom devices");
+        
         Devcon.RefreshPhantom();
+        
+        Log.Logger.Information("Phantom device refreshing done");
 
         DetectHidGuardian();
 
@@ -74,6 +84,8 @@ public partial class MainWindow : MetroWindow
             await this.ShowMessageAsync("All good",
                 "Congratulations, seems like this system is free of any known problematic legacy drivers!");
         }
+        
+        Log.Logger.Information("Finished refresh of all component detection");
     }
 
     private void OpenGitHub(object sender, RoutedEventArgs e)

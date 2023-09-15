@@ -16,6 +16,8 @@ public partial class MainWindow
 {
     private void DetectScpComponents()
     {
+        Log.Logger.Information("Running SCP detection");
+        
         //
         // Look for SCP DS3 drivers
         // 
@@ -47,6 +49,8 @@ public partial class MainWindow
         {
             ResultsPanel.Children.Add(CreateNewTile("ScpToolkit Virtual Bus Driver found", ScpVBusOnClicked));
         }
+        
+        Log.Logger.Information("Done");
     }
 
     private async void ScpBthOnClicked()
