@@ -173,7 +173,7 @@ public partial class MainWindow : MetroWindow
                         await controller.CloseAsync();
 
                         await this.ShowMessageAsync("Update finished",
-                            "Everything finished successfully."
+                            "Everything finished successfully. This app will close once you clicked 'OK'."
                         );
                         
                         Application.Current.Shutdown(0);
