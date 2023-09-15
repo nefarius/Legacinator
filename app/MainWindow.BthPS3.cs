@@ -53,7 +53,7 @@ public partial class MainWindow
                         {
                             ResultsPanel.Children.Add(CreateNewTile("Outdated BthPS3 Updater Configuration found",
                                 BthPS3UpdaterOutdatedOnClicked, true));
-                            _actionsToRun.Add(BthPS3UpdaterOutdatedOnClicked);
+                            _actionsToRun.Add(FixBthPS3UpdaterOutdated);
                         }
                     }
                 }
@@ -79,6 +79,23 @@ public partial class MainWindow
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Deleting automatic updater");
 
+        FixBthPS3UpdaterOutdated();
+
+        controller.SetMessage("Showing update notification");
+
+        await this.ShowMessageAsync("Download update",
+            "I will now take you to the latest setup, simply download it and follow the steps to be up to date!");
+
+        Process.Start(Constants.BthPS3LatestReleaseUri);
+
+        await controller.CloseAsync();
+        
+        await Refresh();
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    private static void FixBthPS3UpdaterOutdated()
+    {
         try
         {
             TaskService.Instance.RootFolder.DeleteTask(Constants.BthPS3UpdaterScheduledTaskName, false);
@@ -110,16 +127,5 @@ public partial class MainWindow
         {
             Log.Error(ex, "Failed to delete updater INI file");
         }
-
-        controller.SetMessage("Showing update notification");
-
-        await this.ShowMessageAsync("Download update",
-            "I will now take you to the latest setup, simply download it and follow the steps to be up to date!");
-
-        Process.Start(Constants.BthPS3LatestReleaseUri);
-
-        await controller.CloseAsync();
-        
-        await Refresh();
     }
 }
