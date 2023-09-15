@@ -1,8 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+
+using IniParser;
+using IniParser.Exceptions;
+using IniParser.Model;
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -22,9 +28,14 @@ namespace Legacinator;
 /// </summary>
 public partial class MainWindow : MetroWindow
 {
-    private static readonly string WinDir = Environment.GetEnvironmentVariable("WINDIR");
+    private const string ConfigFileName = "Legacinator.ini";
+    private static readonly string WinDir = Environment.GetEnvironmentVariable("WINDIR") ?? @"C:\Windows";
 
     private static readonly string InfDir = Path.Combine(WinDir, "INF");
+
+    private static readonly TimeSpan RefreshTimeout = TimeSpan.FromSeconds(15);
+
+    private readonly bool _skipDeviceRefresh;
 
     public MainWindow()
     {
@@ -34,6 +45,18 @@ public partial class MainWindow : MetroWindow
             .MinimumLevel.Debug()
             .WriteTo.File("Legacinator.log")
             .CreateLogger();
+
+        try
+        {
+            FileIniDataParser parser = new();
+            IniData? config = parser.ReadFile(ConfigFileName);
+
+            bool.TryParse(config["Detection"]["SkipDeviceRefresh"], out _skipDeviceRefresh);
+        }
+        catch (ParsingException)
+        {
+            Log.Logger.Warning("Config file {Config} not found or not readable", ConfigFileName);
+        }
     }
 
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -59,39 +82,74 @@ public partial class MainWindow : MetroWindow
     /// </summary>
     private async Task Refresh()
     {
+        CancellationTokenSource cts = new();
+
         ProgressDialogController controller =
-            await this.ShowProgressAsync("Please wait...", "Refreshing all connected devices, this might take a while");
-        
+            await this.ShowProgressAsync("Please wait...", "Running detection, this might take a moment");
+
         Log.Logger.Information("Starting refresh of all component detection");
 
         ResultsPanel.Children.Clear();
 
-        Log.Logger.Information("Refreshing phantom devices");
-        
-        Devcon.RefreshPhantom();
+        // timeout to prevent endless hang
+        cts.CancelAfter(RefreshTimeout);
+        cts.Token.ThrowIfCancellationRequested();
 
-        Log.Logger.Information("Phantom device refreshing done");
-
-        DetectHidGuardian();
-
-        DetectScpComponents();
-
-        DetectViGEmBus();
-
-        DetectHidHide();
-
-        DetectBthPS3();
-
-        if (ResultsPanel.Children.Count == 0)
+        try
         {
-            await this.ShowMessageAsync("All good",
-                "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+            await Task.Run(() =>
+            {
+                if (_skipDeviceRefresh)
+                {
+                    return;
+                }
+
+                Log.Logger.Information("Refreshing phantom devices");
+
+                Devcon.RefreshPhantom();
+            }, cts.Token).ContinueWith(async _ =>
+            {
+                Log.Logger.Information("Phantom device refreshing done");
+
+                DetectHidGuardian();
+
+                DetectScpComponents();
+
+                DetectViGEmBus();
+
+                DetectHidHide();
+
+                DetectBthPS3();
+
+                if (ResultsPanel.Children.Count == 0)
+                {
+                    await this.ShowMessageAsync("All good",
+                        "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+                }
+
+                Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
+                    ResultsPanel.Children.Count);
+
+                await controller.CloseAsync();
+            }, cts.Token);
         }
+        catch (TaskCanceledException)
+        {
+            await controller.CloseAsync();
 
-        Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
-            ResultsPanel.Children.Count);
+            await this.ShowMessageAsync("Device refresh failed",
+                "Device refresh didn't finish successfully, please reboot your PC as soon as possible. " +
+                "If it hangs on reboot, use the reset button or hold the power button for a couple seconds. " +
+                "Next time you run Legacinator, device refresh will be skipped to avoid this problem. Sorry!"
+            );
 
-        await controller.CloseAsync();
+            FileIniDataParser parser = new();
+            IniData? config = new() { ["Detection"] = { ["SkipDeviceRefresh"] = true.ToString() } };
+
+            parser.WriteFile(ConfigFileName, config);
+
+            Application.Current.Shutdown(-1);
+        }
     }
 
     private void OpenGitHub(object sender, RoutedEventArgs e)
