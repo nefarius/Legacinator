@@ -42,16 +42,9 @@ public partial class MainWindow
         {
             try
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(
-                    @"SYSTEM\CurrentControlSet\Control\Class\{745a17a0-74d3-11d0-b6fe-00a0c90f57da}", true);
-                List<string> entries = key.GetValue("UpperFilters") is string[] filters
-                    ? new List<string>(filters)
-                    : new List<string>();
-                if (entries.Contains("HidGuardian"))
-                {
-                    entries.Remove("HidGuardian");
-                    key.SetValue("UpperFilters", entries.ToArray(), RegistryValueKind.MultiString);
-                }
+                Log.Logger.Information("Removing class filter entry, if present");
+                
+                DeviceClassFilters.RemoveUpper(DeviceClassIds.HumanInterfaceDevices, "HidGuardian");
             }
             catch (Exception ex)
             {
