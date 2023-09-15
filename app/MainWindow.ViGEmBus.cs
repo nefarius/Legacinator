@@ -241,9 +241,9 @@ public partial class MainWindow
             }
         });
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 
     private async void ViGEmBusPreGen1OnClicked()
@@ -304,8 +304,8 @@ public partial class MainWindow
             }
         });
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 }

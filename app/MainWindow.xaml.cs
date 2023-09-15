@@ -59,12 +59,15 @@ public partial class MainWindow : MetroWindow
     /// </summary>
     private async Task Refresh()
     {
+        ProgressDialogController controller =
+            await this.ShowProgressAsync("Please wait...", "Refreshing all connected devices, this might take a while");
+        
         Log.Logger.Information("Starting refresh of all component detection");
 
         ResultsPanel.Children.Clear();
 
         Log.Logger.Information("Refreshing phantom devices");
-
+        
         Devcon.RefreshPhantom();
 
         Log.Logger.Information("Phantom device refreshing done");
@@ -87,6 +90,8 @@ public partial class MainWindow : MetroWindow
 
         Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
             ResultsPanel.Children.Count);
+
+        await controller.CloseAsync();
     }
 
     private void OpenGitHub(object sender, RoutedEventArgs e)

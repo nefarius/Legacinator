@@ -115,9 +115,9 @@ public partial class MainWindow
             }
         });
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 
     private async void ScpDS3OnClicked()
@@ -182,9 +182,9 @@ public partial class MainWindow
             }
         });
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 
     private async void ScpVBusOnClicked()
@@ -248,9 +248,9 @@ public partial class MainWindow
             }
         });
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 
     private async void ScpDS4OnClicked()
@@ -315,8 +315,8 @@ public partial class MainWindow
             }
         });
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 }

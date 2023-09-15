@@ -117,8 +117,8 @@ public partial class MainWindow
 
         Process.Start(Constants.BthPS3LatestReleaseUri);
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 }

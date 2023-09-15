@@ -107,8 +107,8 @@ public partial class MainWindow
         await this.ShowMessageAsync("Reboot recommended",
             "HidGuardian components got cleaned up, a reboot is highly recommended to finish the procedure.");
 
-        await Refresh();
-
         await controller.CloseAsync();
+        
+        await Refresh();
     }
 }
