@@ -69,7 +69,7 @@ public partial class MainWindow : MetroWindow
 
             if (parent is not null && parent.ProcessName.ToLower().Contains("updater"))
             {
-                _runUnattended = true;
+                _skipDeviceRefresh = _runUnattended = true;
             }
         }
         catch (Exception ex)
