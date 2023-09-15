@@ -36,7 +36,7 @@ public partial class MainWindow : MetroWindow
 
     private static readonly TimeSpan RefreshTimeout = TimeSpan.FromSeconds(15);
 
-    private readonly bool _runUnattended;
+    private readonly bool _isInUpdaterMode;
 
     private readonly bool _skipDeviceRefresh;
 
@@ -69,7 +69,7 @@ public partial class MainWindow : MetroWindow
 
             if (parent is not null && parent.ProcessName.ToLower().Contains("updater"))
             {
-                _skipDeviceRefresh = _runUnattended = true;
+                _skipDeviceRefresh = _isInUpdaterMode = true;
             }
         }
         catch (Exception ex)
