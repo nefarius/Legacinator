@@ -100,7 +100,7 @@ public partial class MainWindow
                         {
                             ResultsPanel.Children.Add(CreateNewTile("Outdated ViGEmBus Updater Configuration found",
                                 ViGEmBusUpdaterUrlOutdatedOnClicked, true));
-                            _actionsToRun.Add(ViGEmBusUpdaterUrlOutdatedOnClicked);
+                            _actionsToRun.Add(FixViGEmBusUpdaterUrlOutdated);
                         }
                     }
                 }
@@ -160,8 +160,15 @@ public partial class MainWindow
 
     private async void ViGEmBusUpdaterUrlOutdatedOnClicked()
     {
+        FixViGEmBusUpdaterUrlOutdated();
+
+        await Refresh();
+    }
+
+    private void FixViGEmBusUpdaterUrlOutdated()
+    {
         Log.Information($"{nameof(ViGEmBusUpdaterUrlOutdatedOnClicked)} invoked");
-        
+
         using RegistryKey view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
             RegistryView.Registry32);
         RegistryKey hhRegKey = view32.OpenSubKey(Constants.ViGEmBusRegistryPartialKey);
@@ -175,8 +182,6 @@ public partial class MainWindow
 
         data["General"]["URL"] = Constants.ViGEmBusUpdaterNewUrl;
         parser.WriteFile(updaterIniFilePath, data, new UTF8Encoding(false));
-
-        await Refresh();
     }
 
     private static void HPForkViGEmBusOnClicked()

@@ -80,7 +80,7 @@ public partial class MainWindow
                         {
                             ResultsPanel.Children.Add(CreateNewTile("Outdated HidHide Updater Configuration found",
                                 HidHideUpdaterUrlOutdatedOnClicked, true));
-                            _actionsToRun.Add(HidHideUpdaterUrlOutdatedOnClicked);
+                            _actionsToRun.Add(FixHidHideUpdaterUrlOutdated);
                         }
                     }
                 }
@@ -138,6 +138,13 @@ public partial class MainWindow
 
     private async void HidHideUpdaterUrlOutdatedOnClicked()
     {
+        FixHidHideUpdaterUrlOutdated();
+
+        await Refresh();
+    }
+
+    private static void FixHidHideUpdaterUrlOutdated()
+    {
         RegistryKey hhRegKey = Registry.LocalMachine.OpenSubKey(Constants.HidHideRegistryPartialKey);
 
         string installPath = hhRegKey!.GetValue("Path") as string;
@@ -149,8 +156,6 @@ public partial class MainWindow
 
         data["General"]["URL"] = Constants.HidHideUpdaterNewUrl;
         parser.WriteFile(updaterIniFilePath, data, new UTF8Encoding(false));
-
-        await Refresh();
     }
 
     private async void HidHideOutdatedOnClicked()
