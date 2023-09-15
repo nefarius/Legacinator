@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -35,6 +36,8 @@ public partial class MainWindow : MetroWindow
 
     private static readonly TimeSpan RefreshTimeout = TimeSpan.FromSeconds(15);
 
+    private readonly bool _runUnattended;
+
     private readonly bool _skipDeviceRefresh;
 
     public MainWindow()
@@ -57,12 +60,26 @@ public partial class MainWindow : MetroWindow
         {
             Log.Logger.Warning("Config file {Config} not found or not readable", ConfigFileName);
         }
+
+        try
+        {
+            Process? parent = ParentProcessUtilities.GetParentProcess();
+
+            Log.Logger.Information("Running with parent process: {Parent}", parent);
+
+            if (parent is not null && parent.ProcessName.ToLower().Contains("updater"))
+            {
+                _runUnattended = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Logger.Warning(ex, "Failed to get parent process information");
+        }
     }
 
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        Log.Logger.Information("Running with parent process: {Parent}", ParentProcessUtilities.GetParentProcess());
-
 #if !DEBUG
         if (Updater.IsUpdateAvailable)
         {
@@ -107,7 +124,7 @@ public partial class MainWindow : MetroWindow
                 Log.Logger.Information("Refreshing phantom devices");
 
                 Devcon.RefreshPhantom();
-                
+
                 Log.Logger.Information("Phantom device refreshing done");
             }, cts.Token).ContinueWith(async _ =>
             {
