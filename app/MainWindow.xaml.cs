@@ -107,10 +107,10 @@ public partial class MainWindow : MetroWindow
                 Log.Logger.Information("Refreshing phantom devices");
 
                 Devcon.RefreshPhantom();
+                
+                Log.Logger.Information("Phantom device refreshing done");
             }, cts.Token).ContinueWith(async _ =>
             {
-                Log.Logger.Information("Phantom device refreshing done");
-
                 // run this fun on UI thread
                 await Dispatcher.Invoke(async () =>
                 {
