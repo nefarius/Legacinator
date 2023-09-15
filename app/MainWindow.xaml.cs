@@ -39,16 +39,16 @@ public partial class MainWindow : MetroWindow
     private async void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         Log.Logger.Information("Running with parent process: {Parent}", ParentProcessUtilities.GetParentProcess());
-        
+
 #if !DEBUG
-            if (Updater.IsUpdateAvailable)
-            {
-                await this.ShowMessageAsync("Update available",
-                    "A newer version of the Legacinator is available, I'll now take you to the download site!");
-                Process.Start(Constants.LegacinatorReleasesUri);
-            }
+        if (Updater.IsUpdateAvailable)
+        {
+            await this.ShowMessageAsync("Update available",
+                "A newer version of the Legacinator is available, I'll now take you to the download site!");
+            Process.Start(Constants.LegacinatorReleasesUri);
+        }
 #endif
-        
+
         Log.Logger.Information("Starting complete scan");
 
         await Refresh();
@@ -60,13 +60,13 @@ public partial class MainWindow : MetroWindow
     private async Task Refresh()
     {
         Log.Logger.Information("Starting refresh of all component detection");
-        
+
         ResultsPanel.Children.Clear();
 
         Log.Logger.Information("Refreshing phantom devices");
-        
+
         Devcon.RefreshPhantom();
-        
+
         Log.Logger.Information("Phantom device refreshing done");
 
         DetectHidGuardian();
@@ -76,7 +76,7 @@ public partial class MainWindow : MetroWindow
         DetectViGEmBus();
 
         DetectHidHide();
-        
+
         DetectBthPS3();
 
         if (ResultsPanel.Children.Count == 0)
@@ -84,8 +84,9 @@ public partial class MainWindow : MetroWindow
             await this.ShowMessageAsync("All good",
                 "Congratulations, seems like this system is free of any known problematic legacy drivers!");
         }
-        
-        Log.Logger.Information("Finished refresh of all component detection");
+
+        Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
+            ResultsPanel.Children.Count);
     }
 
     private void OpenGitHub(object sender, RoutedEventArgs e)
