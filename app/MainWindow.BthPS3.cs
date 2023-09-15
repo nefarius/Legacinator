@@ -23,7 +23,7 @@ public partial class MainWindow
     private void DetectBthPS3()
     {
         Log.Logger.Information("Running BthPS3 detection");
-        
+
         //
         // Check for old update server URL in updater agent config file (<= v1.2.4)
         //
@@ -51,8 +51,12 @@ public partial class MainWindow
 
                         if (updaterUrl.Equals(Constants.BthPS3UpdaterLegacyUrl, StringComparison.OrdinalIgnoreCase))
                         {
-                            ResultsPanel.Children.Add(CreateNewTile("Outdated BthPS3 Updater Configuration found",
-                                BthPS3UpdaterOutdatedOnClicked, true));
+                            if (!_isInUpdaterMode)
+                            {
+                                ResultsPanel.Children.Add(CreateNewTile("Outdated BthPS3 Updater Configuration found",
+                                    BthPS3UpdaterOutdatedOnClicked, true));
+                            }
+
                             _actionsToRun.Add(FixBthPS3UpdaterOutdated);
                         }
                     }
@@ -70,7 +74,7 @@ public partial class MainWindow
         {
             Log.Error(ex, "Error during BthPS3 updater config file search");
         }
-        
+
         Log.Logger.Information("Done");
     }
 
@@ -89,7 +93,7 @@ public partial class MainWindow
         Process.Start(Constants.BthPS3LatestReleaseUri);
 
         await controller.CloseAsync();
-        
+
         await Refresh();
     }
 

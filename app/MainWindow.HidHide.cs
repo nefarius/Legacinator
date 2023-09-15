@@ -24,7 +24,7 @@ public partial class MainWindow
     private void DetectHidHide()
     {
         Log.Logger.Information("Running HidHide detection");
-        
+
         //
         // Scan for HidHide and check version
         // 
@@ -78,8 +78,12 @@ public partial class MainWindow
 
                         if (!updaterUrl.Equals(Constants.HidHideUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
                         {
-                            ResultsPanel.Children.Add(CreateNewTile("Outdated HidHide Updater Configuration found",
-                                HidHideUpdaterUrlOutdatedOnClicked, true));
+                            if (!_isInUpdaterMode)
+                            {
+                                ResultsPanel.Children.Add(CreateNewTile("Outdated HidHide Updater Configuration found",
+                                    HidHideUpdaterUrlOutdatedOnClicked, true));
+                            }
+
                             _actionsToRun.Add(FixHidHideUpdaterUrlOutdated);
                         }
                     }
@@ -97,7 +101,7 @@ public partial class MainWindow
         {
             Log.Error(ex, "Error during HidHide updater config file search");
         }
-        
+
         Log.Logger.Information("Done");
     }
 

@@ -26,7 +26,7 @@ public partial class MainWindow
     private void DetectViGEmBus()
     {
         Log.Logger.Information("Running ViGEmBus detection");
-        
+
         //
         // Look for old ViGEmBus (v1.14.x) virtual device
         // 
@@ -98,8 +98,12 @@ public partial class MainWindow
 
                         if (!updaterUrl.Equals(Constants.ViGEmBusUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
                         {
-                            ResultsPanel.Children.Add(CreateNewTile("Outdated ViGEmBus Updater Configuration found",
-                                ViGEmBusUpdaterUrlOutdatedOnClicked, true));
+                            if (!_isInUpdaterMode)
+                            {
+                                ResultsPanel.Children.Add(CreateNewTile("Outdated ViGEmBus Updater Configuration found",
+                                    ViGEmBusUpdaterUrlOutdatedOnClicked, true));
+                            }
+
                             _actionsToRun.Add(FixViGEmBusUpdaterUrlOutdated);
                         }
                     }
@@ -117,7 +121,7 @@ public partial class MainWindow
         {
             Log.Error(ex, "Error during ViGEmBus updater config file search");
         }
-        
+
         Log.Logger.Information("Done");
     }
 
@@ -248,7 +252,7 @@ public partial class MainWindow
         });
 
         await controller.CloseAsync();
-        
+
         await Refresh();
     }
 
@@ -311,7 +315,7 @@ public partial class MainWindow
         });
 
         await controller.CloseAsync();
-        
+
         await Refresh();
     }
 }
