@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -154,9 +155,17 @@ public partial class MainWindow : MetroWindow
                     Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
                         ResultsPanel.Children.Count);
 
+                    // bail out here to show normal GUI
                     if (!_isInUpdaterMode)
                     {
                         await controller.CloseAsync();
+                        return;
+                    }
+
+                    // nothing to do
+                    if (!_actionsToRun.Any())
+                    {
+                        Application.Current.Shutdown(0);
                         return;
                     }
 
