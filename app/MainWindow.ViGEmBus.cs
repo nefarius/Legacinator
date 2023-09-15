@@ -100,6 +100,7 @@ public partial class MainWindow
                         {
                             ResultsPanel.Children.Add(CreateNewTile("Outdated ViGEmBus Updater Configuration found",
                                 ViGEmBusUpdaterUrlOutdatedOnClicked, true));
+                            _actionsToRun.Add(ViGEmBusUpdaterUrlOutdatedOnClicked);
                         }
                     }
                 }

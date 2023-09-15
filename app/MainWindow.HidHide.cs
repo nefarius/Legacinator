@@ -80,6 +80,7 @@ public partial class MainWindow
                         {
                             ResultsPanel.Children.Add(CreateNewTile("Outdated HidHide Updater Configuration found",
                                 HidHideUpdaterUrlOutdatedOnClicked, true));
+                            _actionsToRun.Add(HidHideUpdaterUrlOutdatedOnClicked);
                         }
                     }
                 }

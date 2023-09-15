@@ -53,6 +53,7 @@ public partial class MainWindow
                         {
                             ResultsPanel.Children.Add(CreateNewTile("Outdated BthPS3 Updater Configuration found",
                                 BthPS3UpdaterOutdatedOnClicked, true));
+                            _actionsToRun.Add(BthPS3UpdaterOutdatedOnClicked);
                         }
                     }
                 }

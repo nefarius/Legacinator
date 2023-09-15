@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -35,6 +36,8 @@ public partial class MainWindow : MetroWindow
     private static readonly string InfDir = Path.Combine(WinDir, "INF");
 
     private static readonly TimeSpan RefreshTimeout = TimeSpan.FromSeconds(15);
+
+    private readonly List<Action> _actionsToRun = new();
 
     private readonly bool _isInUpdaterMode;
 
@@ -106,6 +109,7 @@ public partial class MainWindow : MetroWindow
 
         Log.Logger.Information("Starting refresh of all component detection");
 
+        _actionsToRun.Clear();
         ResultsPanel.Children.Clear();
 
         // timeout to prevent endless hang
@@ -150,7 +154,40 @@ public partial class MainWindow : MetroWindow
                     Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
                         ResultsPanel.Children.Count);
 
-                    await controller.CloseAsync();
+                    if (!_isInUpdaterMode)
+                    {
+                        await controller.CloseAsync();
+                        return;
+                    }
+
+                    try
+                    {
+                        controller.SetMessage("Running fixes for detected problems");
+
+                        // run detected fixed automatically
+                        foreach (Action fix in _actionsToRun)
+                        {
+                            fix.Invoke();
+                        }
+
+                        await controller.CloseAsync();
+
+                        await this.ShowMessageAsync("Update finished",
+                            "Everything finished successfully."
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Logger.Fatal(ex, "One or more fixes failed to apply");
+
+                        await controller.CloseAsync();
+                        
+                        await this.ShowMessageAsync("Unexpected error",
+                            "One or more operations failed, please try again or contact support. Sorry!"
+                        );
+                    }
+
+                    Application.Current.Shutdown(0);
                 });
             }, cts.Token);
         }
