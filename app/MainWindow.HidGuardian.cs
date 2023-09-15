@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 using MahApps.Metro.Controls.Dialogs;
-
-using Microsoft.Win32;
 
 using Nefarius.Utilities.DeviceManagement.Drivers;
 using Nefarius.Utilities.DeviceManagement.PnP;
@@ -24,12 +21,18 @@ public partial class MainWindow
     private void DetectHidGuardian()
     {
         Log.Logger.Information("Running HidGuardian detection");
-        
+
         if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
         {
             ResultsPanel.Children.Add(CreateNewTile("HidGuardian is installed", HidGuardianOnClicked));
         }
-        
+
+        if (DeviceClassFilters.GetUpper(DeviceClassIds.HumanInterfaceDevices)?.Contains("HidGuardian") ?? false)
+        {
+            ResultsPanel.Children.Add(CreateNewTile("Partial HidGuardian installation found", HidGuardianOnClicked,
+                true));
+        }
+
         Log.Logger.Information("Done");
     }
 
@@ -43,7 +46,7 @@ public partial class MainWindow
             try
             {
                 Log.Logger.Information("Removing class filter entry, if present");
-                
+
                 DeviceClassFilters.RemoveUpper(DeviceClassIds.HumanInterfaceDevices, "HidGuardian");
             }
             catch (Exception ex)
