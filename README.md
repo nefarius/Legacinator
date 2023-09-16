@@ -37,6 +37,10 @@ with Windows, the tool should be ready to run once downloaded.
 👉 [Get the latest signed release from here](../../releases/latest). Use at your own risk. No support provided
 whatsoever.
 
+<details>
+
+<summary>Screenshots</summary>
+
 ## Usage examples
 
 If you run the tool on a machine with legacy components, the window will fill up with one or more tiles listing
@@ -54,6 +58,8 @@ in a safe and supported way. A few more detection examples:
 On a "clean" machine you simply get a success dialog:
 
 ![explorer_IQFdg4ziCh.png](assets/explorer_IQFdg4ziCh.png)
+
+</details>
 
 ## Sources & 3rd party credits
 
