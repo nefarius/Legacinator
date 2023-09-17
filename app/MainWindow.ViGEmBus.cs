@@ -30,7 +30,7 @@ public partial class MainWindow
         //
         // Look for old ViGEmBus (v1.14.x) virtual device
         // 
-        if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+        if (Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System,
                 Constants.ViGemBusVersion1_14HardwareId))
         {
             ResultsPanel.Children.Add(CreateNewTile("Deprecated ViGEmBus (pre-Gen1) Driver found",
@@ -65,7 +65,7 @@ public partial class MainWindow
         //
         // Look for HP Fork of ViGEmBus (v1.14.x) virtual device
         // 
-        if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+        if (Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System,
                 Constants.ViGEmBusHPForkHardwareId))
         {
             ResultsPanel.Children.Add(CreateNewTile("HP Fork of ViGEmBus Driver found", HPForkViGEmBusOnClicked));
@@ -200,7 +200,7 @@ public partial class MainWindow
 
         await Task.Run(() =>
         {
-            Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+            Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System,
                 Constants.ViGemBusVersion1_16HardwareId,
                 out IEnumerable<string> instances);
 
@@ -227,7 +227,7 @@ public partial class MainWindow
 
                 try
                 {
-                    Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
+                    Devcon.Remove(DeviceClassIds.System, instanceId);
                 }
                 catch (Exception ex)
                 {
@@ -263,7 +263,7 @@ public partial class MainWindow
 
         await Task.Run(() =>
         {
-            Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid,
+            Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System,
                 Constants.ViGemBusVersion1_14HardwareId,
                 out IEnumerable<string> instances);
 
@@ -290,7 +290,7 @@ public partial class MainWindow
 
                 try
                 {
-                    Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
+                    Devcon.Remove(DeviceClassIds.System, instanceId);
                 }
                 catch (Exception ex)
                 {

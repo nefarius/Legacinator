@@ -22,7 +22,7 @@ public partial class MainWindow
     {
         Log.Logger.Information("Running HidGuardian detection");
 
-        if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId))
+        if (Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System, Constants.HidGuardianHardwareId))
         {
             ResultsPanel.Children.Add(CreateNewTile("HidGuardian is installed", HidGuardianOnClicked));
         }
@@ -54,7 +54,7 @@ public partial class MainWindow
                 Log.Error(ex, "Error while processing filters");
             }
 
-            Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidGuardianHardwareId,
+            Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System, Constants.HidGuardianHardwareId,
                 out IEnumerable<string> instances);
 
             foreach (string instanceId in instances)
@@ -80,7 +80,7 @@ public partial class MainWindow
 
                 try
                 {
-                    Devcon.Remove(Constants.SystemDeviceClassGuid, instanceId);
+                    Devcon.Remove(DeviceClassIds.System, instanceId);
                 }
                 catch (Exception ex)
                 {

@@ -28,7 +28,7 @@ public partial class MainWindow
         //
         // Scan for HidHide and check version
         // 
-        if (Devcon.FindInDeviceClassByHardwareId(Constants.SystemDeviceClassGuid, Constants.HidHideHardwareId,
+        if (Devcon.FindInDeviceClassByHardwareId(DeviceClassIds.System, Constants.HidHideHardwareId,
                 out IEnumerable<string> hhInstances))
         {
             try
