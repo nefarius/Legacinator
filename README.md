@@ -64,6 +64,7 @@ On a "clean" machine you simply get a success dialog:
 ## Sources & 3rd party credits
 
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
+- [ControlzEx](https://github.com/ControlzEx/ControlzEx)
 - [Fody Costura](https://github.com/Fody/Costura)
 - [Nefarius.Utilities.DeviceManagement](https://github.com/nefarius/Nefarius.Utilities.DeviceManagement)
 - [INI File Parser](https://github.com/rickyah/ini-parser)
