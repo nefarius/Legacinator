@@ -20,12 +20,12 @@ etc.) and provides a solution to the user.
 ## Features
 
 - Detects and removes drivers from [ScpToolkit](https://github.com/nefarius/ScpToolkit) installations
-- Detects and removes [HidGuardian](https://github.com/ViGEm/HidGuardian)
+- Detects and removes [HidGuardian](https://github.com/nefarius/HidGuardian)
 - Detects and removes outdated versions of [ViGEmBus](https://github.com/nefarius/ViGEmBus)
 - Detects and removes outdated versions of [HidHide](https://github.com/nefarius/HidHide)
-- Detects the [HP fork of ViGEmBus from 2018](https://github.com/ViGEm/ViGEmBus/issues/99) and offers mitigation
+- Detects the [HP fork of ViGEmBus from 2018](https://github.com/nefarius/ViGEmBus/issues/99) and offers mitigation
   instructions
-- Detects and fixes [outdated updater agent configuration](https://docs.nefarius.at/projects/ViGEm/End-of-Life/). 
+- Detects and fixes [outdated updater agent configuration](https://docs.nefarius.at/projects/ViGEm/End-of-Life/).
 
 ## Environment
 
