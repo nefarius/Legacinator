@@ -5,3 +5,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "ControlzEx"
+        versions: ["5.x", "6.x"]
+      - dependency-name: "MahApps.Metro"
+        versions: ["3.x"]
