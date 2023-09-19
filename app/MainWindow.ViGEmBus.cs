@@ -168,7 +168,7 @@ public partial class MainWindow
 
         const string healthyIniContent = $$"""
                                            [General]
-                                           Flags=PerMachine|ShowConfigOptionsButton
+                                           Flags=PerMachine
                                            AppDir=C:\Program Files\Nefarius Software Solutions\ViGEm Bus Driver\
                                            ApplicationName=ViGEm Bus Driver
                                            CompanyName=Nefarius Software Solutions e.U.

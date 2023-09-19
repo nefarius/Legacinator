@@ -117,7 +117,7 @@ public partial class MainWindow
 
         const string healthyIniContent = $$"""
                                            [General]
-                                           Flags = PerMachine|ShowConfigOptionsButton
+                                           Flags = PerMachine
                                            AppDir = C:\Program Files\Nefarius Software Solutions\HidHide\
                                            ApplicationName = HidHide
                                            CompanyName = Nefarius Software Solutions e.U.
