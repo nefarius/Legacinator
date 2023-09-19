@@ -40,6 +40,7 @@ public static class Constants
     public const string ViGEmBusUpdaterNewUrl = "https://aiu.api.nefarius.systems/api/github/ViGEm/ViGEmBus/updates";
     public const string ViGEmBusRegistryPartialKey = @"SOFTWARE\Nefarius Software Solutions e.U.\ViGEm Bus Driver";
     public const string ViGEmBusUpdaterConfigFileName = "ViGEmBus_Updater.ini";
+    public const string ViGEmBusOldUpdaterConfigFileName = "ViGEmBusUpdater.ini";
     public const string ViGemBusVersion1_14HardwareId = @"Root\ViGEmBus";
     public const string ViGemBusVersion1_16HardwareId = @"Nefarius\ViGEmBus\Gen1";
     public const string ViGEmBusHPForkHardwareId = @"SWC\HPIC0004_ViGEmBus";

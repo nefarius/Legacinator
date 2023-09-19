@@ -87,7 +87,36 @@ public partial class MainWindow
 
                 if (!string.IsNullOrEmpty(installPath) && Directory.Exists(installPath))
                 {
+                    //
+                    // v1.17 and up
+                    //
+                    
                     string updaterIniFilePath = Path.Combine(installPath, Constants.ViGEmBusUpdaterConfigFileName);
+
+                    if (File.Exists(updaterIniFilePath))
+                    {
+                        FileIniDataParser parser = new();
+                        IniData data = parser.ReadFile(updaterIniFilePath, new UTF8Encoding(false));
+
+                        string updaterUrl = data["General"]["URL"];
+
+                        if (!updaterUrl.Equals(Constants.ViGEmBusUpdaterNewUrl, StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (!_isInUpdaterMode)
+                            {
+                                ResultsPanel.Children.Add(CreateNewTile("Outdated ViGEmBus Updater Configuration found",
+                                    ViGEmBusUpdaterUrlOutdatedOnClicked, true));
+                            }
+
+                            _actionsToRun.Add(FixViGEmBusUpdaterUrlOutdated);
+                        }
+                    }
+                    
+                    //
+                    // v1.16 and below
+                    //
+                    
+                    updaterIniFilePath = Path.Combine(installPath, Constants.ViGEmBusOldUpdaterConfigFileName);
 
                     if (File.Exists(updaterIniFilePath))
                     {
@@ -181,6 +210,21 @@ public partial class MainWindow
 
         string updaterIniFilePath = Path.Combine(installPath!, Constants.ViGEmBusUpdaterConfigFileName);
 
+        //
+        // Check for pre v1.16 and post v1.17 file names
+        //
+        
+        if (!File.Exists(updaterIniFilePath))
+        {
+            updaterIniFilePath = Path.Combine(installPath!, Constants.ViGEmBusOldUpdaterConfigFileName);
+        }
+
+        if (!File.Exists(updaterIniFilePath))
+        {
+            Log.Logger.Error("Couldn't find file {Path} to patch", updaterIniFilePath);
+            return;
+        }
+        
         FileIniDataParser parser = new();
         IniData data = parser.ReadFile(updaterIniFilePath, new UTF8Encoding(false));
 
