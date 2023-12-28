@@ -139,17 +139,31 @@ public partial class MainWindow
 
     private async void HidHideCleanDevicesList()
     {
-        HidHideControlService hh = new();
-        hh.ClearBlockedInstancesList();
-        
+        try
+        {
+            HidHideControlService hh = new();
+            hh.ClearBlockedInstancesList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"{nameof(HidHideCleanDevicesList)} failed");
+        }
+
         await Refresh();
     }
 
     private async void HidHideCleanAppList()
     {
-        HidHideControlService hh = new();
-        hh.ClearApplicationsList();
-        
+        try
+        {
+            HidHideControlService hh = new();
+            hh.ClearApplicationsList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"{nameof(HidHideCleanAppList)} failed");
+        }
+
         await Refresh();
     }
 
