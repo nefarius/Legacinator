@@ -13,6 +13,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 using Microsoft.Win32;
 
+using Nefarius.Drivers.HidHide;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
 using Serilog;
@@ -102,7 +103,54 @@ public partial class MainWindow
             Log.Error(ex, "Error during HidHide updater config file search");
         }
 
+        //
+        // Offer user the ability to wipe potentially faulty configuration
+        //
+
+        HidHideControlService hh = new();
+
+        if (hh.IsInstalled)
+        {
+            try
+            {
+                if (hh.ApplicationPaths.Any())
+                {
+                    ResultsPanel.Children.Add(
+                        CreateNewTile("Clean/reset HidHide application list", HidHideCleanAppList));
+                }
+
+                if (hh.BlockedInstanceIds.Any())
+                {
+                    ResultsPanel.Children.Add(
+                        CreateNewTile("Clean/reset HidHide devices list", HidHideCleanDevicesList));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Fetching driver config failed, offering reset options to user");
+
+                ResultsPanel.Children.Add(CreateNewTile("Clean/reset HidHide application list", HidHideCleanAppList));
+                ResultsPanel.Children.Add(CreateNewTile("Clean/reset HidHide devices list", HidHideCleanDevicesList));
+            }
+        }
+
         Log.Logger.Information("Done");
+    }
+
+    private async void HidHideCleanDevicesList()
+    {
+        HidHideControlService hh = new();
+        hh.ClearBlockedInstancesList();
+        
+        await Refresh();
+    }
+
+    private async void HidHideCleanAppList()
+    {
+        HidHideControlService hh = new();
+        hh.ClearApplicationsList();
+        
+        await Refresh();
     }
 
     private async void HidHideBusUpdaterCorruptOnClicked()
