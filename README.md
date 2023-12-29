@@ -1,6 +1,6 @@
 <img src="assets/NSS-128x128.png" align="right" />
 
-# Nefarius' Legacinator
+# Nefarius™ Legacinator
 
 [![.NET](https://github.com/nefarius/Legacinator/actions/workflows/build.yml/badge.svg)](https://github.com/nefarius/Legacinator/actions/workflows/build.yml) [![GitHub All Releases](https://img.shields.io/github/downloads/nefarius/Legacinator/total)](https://somsubhra.github.io/github-release-stats/?username=nefarius&repository=Legacinator)
 
