@@ -40,7 +40,7 @@ whatsoever.
 
 ## Screenshots
 
-Screenshots might be outdated and not reflect the look and feel of the latest application.
+Screenshots might be outdated and not reflect the look and feel of the latest application version.
 
 <details>
 
