@@ -26,6 +26,7 @@ etc.) and provides a solution to the user.
 - Detects the [HP fork of ViGEmBus from 2018](https://github.com/nefarius/ViGEmBus/issues/99) and offers mitigation
   instructions
 - Detects and fixes [outdated updater agent configuration](https://docs.nefarius.at/projects/ViGEm/End-of-Life/).
+- Offers wiping the [HidHide](https://github.com/nefarius/HidHide) configuration parameters
 
 ## Environment
 
@@ -38,6 +39,8 @@ with Windows, the tool should be ready to run once downloaded.
 whatsoever.
 
 ## Screenshots
+
+Screenshots might be outdated and not reflect the look and feel of the latest application.
 
 <details>
 
