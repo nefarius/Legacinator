@@ -1,63 +1,68 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-    <PropertyGroup>
-        <ProjectGuid>{C0A643DF-772A-460F-99E8-4DD8090C8F38}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net48</TargetFramework>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <AssemblyTitle>Legacinator</AssemblyTitle>
-        <Product>Legacinator</Product>
-        <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2023</Copyright>
-        <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
-        <LangVersion>latest</LangVersion>
-        <UseWPF>true</UseWPF>
-        <Version>1.0.0</Version>
-    </PropertyGroup>
-    <PropertyGroup>
-        <ApplicationIcon>logo.ico</ApplicationIcon>
-    </PropertyGroup>
-    <PropertyGroup>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
-        <Authors>Benjamin Höglinger-Stelzer</Authors>
-        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/nefarius/Legacinator</PackageProjectUrl>
-        <Description>The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of known legacy (outdated, potentially faulty) device drivers (leftovers from ScpToolkit, outdated ViGEmBus copies etc.) and provide a solution to the user.</Description>
-        <RepositoryUrl>https://github.com/nefarius/Legacinator</RepositoryUrl>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Remove="splash.png"/>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="app.manifest"/>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="ControlzEx" Version="7.0.0-alpha0106" />
-        <PackageReference Include="Costura.Fody" Version="5.7.0">
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="ini-parser" Version="2.5.2"/>
-        <PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0492" />
-        <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="5.0.0"/>
-        <PackageReference Include="Nefarius.Drivers.HidHide" Version="2.2.0" />
-        <PackageReference Include="Nefarius.Utilities.Assembly" Version="1.0.4" />
-        <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.22.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Include="Serilog.Sinks.File" Version="6.0.0"/>
-        <PackageReference Include="TaskScheduler" Version="2.11.0" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="FodyWeavers.xml"/>
-        <None Remove="logo.ico" />
-        <Resource Include="logo.ico" />
-        <None Remove="logo-1024x1024.png" />
-        <None Remove="logo-128x128.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <SplashScreen Include="splash.png"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <ProjectGuid>{C0A643DF-772A-460F-99E8-4DD8090C8F38}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AssemblyTitle>Legacinator</AssemblyTitle>
+    <Product>Legacinator</Product>
+    <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2024</Copyright>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
+    <LangVersion>latest</LangVersion>
+    <UseWPF>true</UseWPF>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Authors>Benjamin Höglinger-Stelzer</Authors>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/nefarius/Legacinator</PackageProjectUrl>
+    <Description>The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of known legacy (outdated, potentially faulty) device drivers (leftovers from ScpToolkit, outdated ViGEmBus copies etc.) and provide a solution to the user.</Description>
+    <RepositoryUrl>https://github.com/nefarius/Legacinator</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ControlzEx" Version="7.0.0-alpha0106" />
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="ini-parser" Version="2.5.2" />
+    <PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0492" />
+    <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="5.0.0" />
+    <PackageReference Include="Nefarius.Drivers.HidHide" Version="2.2.0" />
+    <PackageReference Include="Nefarius.Utilities.Assembly" Version="1.0.4" />
+    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.22.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="TaskScheduler" Version="2.11.0" />
+    <PackageReference Include="MinVer" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
+    <None Remove="logo.ico" />
+    <Resource Include="logo.ico" />
+    <None Remove="logo-1024x1024.png" />
+    <None Remove="logo-128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="splash.png" />
+  </ItemGroup>
 </Project>
