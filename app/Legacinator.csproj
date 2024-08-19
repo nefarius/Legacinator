@@ -46,7 +46,7 @@
     <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="5.0.0" />
     <PackageReference Include="Nefarius.Drivers.HidHide" Version="2.2.0" />
     <PackageReference Include="Nefarius.Utilities.Assembly" Version="1.0.4" />
-    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.22.0" />
+    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.23.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.11.0" />
