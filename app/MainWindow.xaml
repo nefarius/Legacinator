@@ -11,7 +11,7 @@
                  Icon="logo.ico"
                  ShowIconOnTitleBar="True"
                  Loaded="MainWindow_OnLoaded"
-                 Title="Nefarius' Legacinator"
+                 Title="Nefarius™ Legacinator"
                  Height="440"
                  Width="700">
     <mah:MetroWindow.LeftWindowCommands>
