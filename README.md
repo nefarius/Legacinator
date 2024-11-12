@@ -12,7 +12,7 @@ you with that, but for the game controller issues, read on!
 
 The Legacinator is a simple self-contained .NET 4.8 application that has one task: it scans your machine for traces of
 known legacy (outdated, potentially faulty) device drivers (leftovers
-from [ScpToolkit](https://github.com/nefarius/ScpToolkit), outdated [ViGEmBus](https://github.com/ViGEm/ViGEmBus) copies
+from [ScpToolkit](https://github.com/nefarius/ScpToolkit), outdated [ViGEmBus](https://github.com/nefarius/ViGEmBus) copies
 etc.) and provides a solution to the user.
 
 ## Features
