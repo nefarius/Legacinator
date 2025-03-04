@@ -37,7 +37,7 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="7.0.0-rc0123" />
+    <PackageReference Include="ControlzEx" Version="7.0.0" />
     <PackageReference Include="Costura.Fody" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
