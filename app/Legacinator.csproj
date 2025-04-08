@@ -37,12 +37,12 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="7.0.0" />
+    <PackageReference Include="ControlzEx" Version="7.0.1-rc0014" />
     <PackageReference Include="Costura.Fody" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ini-parser" Version="2.5.2" />
-    <PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0513" />
+    <PackageReference Include="MahApps.Metro" Version="3.0.0-rc0516" />
     <PackageReference Include="MahApps.Metro.IconPacks.ForkAwesome" Version="5.1.0" />
     <PackageReference Include="Nefarius.Drivers.HidHide" Version="2.4.1" />
     <PackageReference Include="Nefarius.Utilities.Assembly" Version="1.2.0" />
