@@ -8,7 +8,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <AssemblyTitle>Legacinator</AssemblyTitle>
     <Product>Legacinator</Product>
-    <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2024</Copyright>
+    <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2025</Copyright>
     <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
     <UseWPF>true</UseWPF>
