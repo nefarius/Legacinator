@@ -36,13 +36,17 @@ public partial class MainWindow
 
         await Task.Run(() =>
         {
+            HashSet<string> infsToDelete = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> infsWithFailedRemoval = new(StringComparer.OrdinalIgnoreCase);
+
             foreach (string instanceId in FindLegacyDsHidMiniInstances(null))
             {
                 try
                 {
                     controller.SetMessage("Deleting device driver");
 
-                    if (TryRemoveLegacyDevice(instanceId, Constants.DsHidMiniDriverFileName, Constants.DsHidMiniInfName))
+                    if (TryRemoveLegacyDevice(instanceId, Constants.DsHidMiniDriverFileName, Constants.DsHidMiniInfName,
+                            infsToDelete, infsWithFailedRemoval))
                     {
                         removed = true;
                     }
@@ -52,6 +56,8 @@ public partial class MainWindow
                     Log.Error(ex, "Failed to remove DsHidMini instance {Instance}", instanceId);
                 }
             }
+
+            DeleteBoundDriverPackages(infsToDelete, infsWithFailedRemoval);
         });
 
         if (removed)
@@ -174,7 +180,8 @@ public partial class MainWindow
         return false;
     }
 
-    private static bool TryRemoveLegacyDevice(string instanceId, string driverFileName, string packageName)
+    private static bool TryRemoveLegacyDevice(string instanceId, string driverFileName, string packageName,
+        ISet<string> infsToDelete, ISet<string> infsWithFailedRemoval)
     {
         PnPDevice device = PnPDevice.GetDeviceByInstanceId(instanceId, DeviceLocationFlags.Phantom);
         string infName = device.GetProperty<string>(DevicePropertyKey.Device_DriverInfPath);
@@ -193,12 +200,51 @@ public partial class MainWindow
             return false;
         }
 
-        Log.Information("Removing {Package} device {Instance} and bound package {Inf}", packageName, instanceId,
-            infName);
+        Log.Information("Removing {Package} device {Instance}", packageName, instanceId);
 
-        Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
-        Devcon.Remove(classGuid, instanceId);
+        bool removedDevice;
+
+        try
+        {
+            removedDevice = Devcon.Remove(classGuid, instanceId);
+        }
+        catch
+        {
+            infsWithFailedRemoval.Add(infName);
+            throw;
+        }
+
+        if (!removedDevice)
+        {
+            Log.Warning("Failed to remove {Package} device {Instance}", packageName, instanceId);
+            infsWithFailedRemoval.Add(infName);
+            return false;
+        }
+
+        infsToDelete.Add(infName);
         return true;
+    }
+
+    private static void DeleteBoundDriverPackages(ISet<string> infsToDelete, ISet<string> infsWithFailedRemoval)
+    {
+        foreach (string infName in infsToDelete)
+        {
+            if (infsWithFailedRemoval.Contains(infName))
+            {
+                Log.Warning("Keeping driver package {Inf} because a device is still bound to it", infName);
+                continue;
+            }
+
+            try
+            {
+                Log.Information("Deleting bound driver package {Inf}", infName);
+                Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed to delete driver package {Inf}", infName);
+            }
+        }
     }
 
     private static void AddHardwareIdMatches(ISet<string> instanceIds, Guid classGuid, string hardwareId,

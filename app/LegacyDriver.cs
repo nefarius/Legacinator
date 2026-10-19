@@ -70,14 +70,14 @@ internal static class LegacyDriver
         return contents.IndexOf(expectedDriverFileName, StringComparison.OrdinalIgnoreCase) >= 0;
     }
 
-    public static void DeleteService(string serviceName)
+    public static bool DeleteService(string serviceName)
     {
         IntPtr manager = OpenSCManager(null, null, ScManagerConnect);
 
         if (manager == IntPtr.Zero)
         {
             Log.Error("Failed to open the service manager, Win32 error {Error}", Marshal.GetLastWin32Error());
-            return;
+            return false;
         }
 
         try
@@ -91,11 +91,11 @@ internal static class LegacyDriver
                 if (error == ErrorServiceDoesNotExist)
                 {
                     Log.Information("Service {Service} is already absent", serviceName);
-                    return;
+                    return true;
                 }
 
                 Log.Error("Failed to open service {Service}, Win32 error {Error}", serviceName, error);
-                return;
+                return false;
             }
 
             try
@@ -103,7 +103,7 @@ internal static class LegacyDriver
                 if (DeleteService(service))
                 {
                     Log.Information("Deleted service {Service}", serviceName);
-                    return;
+                    return true;
                 }
 
                 int error = Marshal.GetLastWin32Error();
@@ -111,10 +111,11 @@ internal static class LegacyDriver
                 if (error == ErrorServiceMarkedForDelete)
                 {
                     Log.Information("Service {Service} is already marked for deletion", serviceName);
-                    return;
+                    return true;
                 }
 
                 Log.Error("Failed to delete service {Service}, Win32 error {Error}", serviceName, error);
+                return false;
             }
             finally
             {

@@ -196,6 +196,9 @@ public partial class MainWindow
                 Constants.BthPS3ProfileHardwareId, true, Constants.BthPS3ProfileServiceName,
                 Constants.BthPS3ProfileDriverFileName, Constants.BthPS3ProfileInfName);
 
+            HashSet<string> nullPdoInfs = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> nullPdoInfsWithFailedRemoval = new(StringComparer.OrdinalIgnoreCase);
+
             foreach (string instanceId in FindLegacyBthPS3NullPdoInstances(null))
             {
                 try
@@ -203,7 +206,7 @@ public partial class MainWindow
                     controller.SetMessage("Deleting device driver");
 
                     if (TryRemoveLegacyDevice(instanceId, Constants.BthPS3NullPdoCatalogName,
-                            Constants.BthPS3NullPdoInfName))
+                            Constants.BthPS3NullPdoInfName, nullPdoInfs, nullPdoInfsWithFailedRemoval))
                     {
                         removed = true;
                     }
@@ -214,6 +217,8 @@ public partial class MainWindow
                 }
             }
 
+            DeleteBoundDriverPackages(nullPdoInfs, nullPdoInfsWithFailedRemoval);
+
             if (IsLegacyBthPS3FilterService(out _))
             {
                 try
@@ -222,8 +227,10 @@ public partial class MainWindow
                     Log.Information(
                         "Deleting manually installed {Service}; pre-v1.3 setups used {Inf} without a filter devnode",
                         Constants.BthPS3FilterServiceName, Constants.BthPS3LegacyFilterInfName);
-                    LegacyDriver.DeleteService(Constants.BthPS3FilterServiceName);
-                    removed = true;
+                    if (LegacyDriver.DeleteService(Constants.BthPS3FilterServiceName))
+                    {
+                        removed = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -247,6 +254,8 @@ public partial class MainWindow
         string hardwareId, bool allowPartial, string serviceName, string driverFileName, string packageName)
     {
         bool removed = false;
+        HashSet<string> infsToDelete = new(StringComparer.OrdinalIgnoreCase);
+        HashSet<string> infsWithFailedRemoval = new(StringComparer.OrdinalIgnoreCase);
 
         foreach (string instanceId in FindLegacyBthPS3Instances(classGuid, hardwareId, allowPartial, serviceName,
                      null))
@@ -255,7 +264,8 @@ public partial class MainWindow
             {
                 controller.SetMessage("Deleting device driver");
 
-                if (TryRemoveLegacyDevice(instanceId, driverFileName, packageName))
+                if (TryRemoveLegacyDevice(instanceId, driverFileName, packageName, infsToDelete,
+                        infsWithFailedRemoval))
                 {
                     removed = true;
                 }
@@ -266,6 +276,7 @@ public partial class MainWindow
             }
         }
 
+        DeleteBoundDriverPackages(infsToDelete, infsWithFailedRemoval);
         return removed;
     }
 
