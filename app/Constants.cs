@@ -22,7 +22,29 @@ public static class Constants
 
     #region BthPS3
 
-    public const string BthPS3HardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}_LOCALMFG&0000";
+    public const string BthPS3ProfileHardwareId = @"BTHENUM\{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}";
+    public const string BthPS3FilterHardwareId = @"Nefarius\{a3dc6d41-9e10-46d9-8be2-9b4a279841df}";
+    public const string BthPS3ProfileServiceName = "BthPS3";
+    public const string BthPS3FilterServiceName = "BthPS3PSM";
+    public const string BthPS3ProfileInfName = "BthPS3.inf";
+    public const string BthPS3FilterInfName = "BthPS3PSM.inf";
+    public const string BthPS3LegacyFilterInfName = "BthPS3PSM_Filter.inf";
+    public const string BthPS3ProfileDriverFileName = "BthPS3.sys";
+    public const string BthPS3FilterDriverFileName = "BthPS3PSM.sys";
+    public static readonly Guid BthPS3NullPdoClassGuid = new("{409ED5DE-6FC0-4566-BDB6-4878D965D914}");
+    public const string BthPS3NullPdoInfName = "BthPS3_PDO_NULL_Device.inf";
+    public const string BthPS3NullPdoCatalogName = "BthPS3_PDO_NULL_Device.cat";
+
+    public static readonly string[] BthPS3NullPdoHardwareIds =
+    {
+        DsHidMiniV1BluetoothHardwareId,
+        @"BTHPS3BUS\{206F84FC-1615-4D9F-954D-21F5A5D388C5}",
+        @"BTHPS3BUS\{84957238-D867-421F-89C1-67847A3B55B5}",
+        @"BTHPS3BUS\{13D12A06-D0B0-4D7E-8D1F-F55914A2ED7C}"
+    };
+
+    // v1 and v2 share the IDs above. Only an installed driver/file version identifies the v1 line.
+    public static readonly Version BthPS3Version2 = new("2.0.0.0");
 
     public const string BthPS3RegistryPartialKey =
         @"SOFTWARE\Nefarius Software Solutions e.U.\BthPS3 Bluetooth Drivers";
@@ -58,6 +80,20 @@ public static class Constants
 #if !DEBUG
     public const string LegacinatorReleasesUri = @"https://github.com/nefarius/Legacinator/releases/latest";
 #endif
+
+    #endregion
+
+    #region DsHidMini
+
+    public static readonly Guid DsHidMiniDeviceInterfaceGuid = new("{399ED672-E0BD-4FB3-AB0C-4955B56FB86A}");
+    public static readonly Guid DsHidMiniDeviceClassGuid = new("{2B959C9D-A4ED-4464-809D-0F1118CF055D}");
+    public const string DsHidMiniInfName = "dshidmini.inf";
+    public const string DsHidMiniDriverFileName = "dshidmini.dll";
+    public const string DsHidMiniUsbHardwareId = @"USB\VID_054C&PID_0268";
+    public const string DsHidMiniV1BluetoothHardwareId = @"BTHPS3BUS\{53F88889-1AAF-4353-A047-556B69EC6DA6}";
+
+    // The interface, class, wired hardware ID, and INF name continued into v2.
+    public static readonly Version DsHidMiniVersion2 = new("2.0.0.0");
 
     #endregion
 
