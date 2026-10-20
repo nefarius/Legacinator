@@ -238,7 +238,7 @@ public partial class MainWindow
             try
             {
                 Log.Information("Deleting bound driver package {Inf}", infName);
-                Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), true);
+                Devcon.DeleteDriver(infName, Path.Combine(InfDir, infName), forceDelete: false);
             }
             catch (Exception ex)
             {
