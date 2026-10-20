@@ -5,6 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
+using Legacinator.Core;
+
 using IniParser;
 using IniParser.Exceptions;
 using IniParser.Model;
@@ -62,7 +64,7 @@ public partial class MainWindow
                                     BthPS3UpdaterOutdatedOnClicked, true));
                             }
 
-                            _actionsToRun.Add(FixBthPS3UpdaterOutdated);
+                            QueueAction(FixBthPS3UpdaterOutdated);
                         }
                     }
                 }
@@ -357,7 +359,7 @@ public partial class MainWindow
         }
 
         if (LegacyDriver.TryGetServiceFileVersion(serviceName, out Version fileVersion) &&
-            fileVersion >= Constants.BthPS3Version2)
+            DriverVersionRules.IsAtLeast(fileVersion, Constants.BthPS3Version2))
         {
             Log.Information(
                 "BthPS3 instance {Instance} reports driver v{DriverVersion}, but service {Service} is v{FileVersion}",
@@ -365,7 +367,7 @@ public partial class MainWindow
             return false;
         }
 
-        if (version >= Constants.BthPS3Version2)
+        if (DriverVersionRules.IsAtLeast(version, Constants.BthPS3Version2))
         {
             return false;
         }
@@ -384,7 +386,7 @@ public partial class MainWindow
             return false;
         }
 
-        if (version >= Constants.BthPS3Version2)
+        if (DriverVersionRules.IsAtLeast(version, Constants.BthPS3Version2))
         {
             return false;
         }
@@ -442,7 +444,7 @@ public partial class MainWindow
             return false;
         }
 
-        if (version >= Constants.BthPS3Version2)
+        if (DriverVersionRules.IsAtLeast(version, Constants.BthPS3Version2))
         {
             return false;
         }

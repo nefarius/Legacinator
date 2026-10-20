@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
+using Legacinator.Core;
+
 using MahApps.Metro.Controls.Dialogs;
 
 using Nefarius.Utilities.DeviceManagement.PnP;
@@ -139,7 +141,7 @@ public partial class MainWindow
         }
 
         if (LegacyDriver.TryGetDsHidMiniFileVersion(out Version fileVersion) &&
-            fileVersion >= Constants.DsHidMiniVersion2)
+            DriverVersionRules.IsAtLeast(fileVersion, Constants.DsHidMiniVersion2))
         {
             Log.Information(
                 "DsHidMini instance {Instance} reports driver v{DriverVersion}, but {DriverFile} is v{FileVersion}",
@@ -147,7 +149,7 @@ public partial class MainWindow
             return false;
         }
 
-        if (version >= Constants.DsHidMiniVersion2)
+        if (DriverVersionRules.IsAtLeast(version, Constants.DsHidMiniVersion2))
         {
             return false;
         }

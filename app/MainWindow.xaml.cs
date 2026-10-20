@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -103,8 +102,6 @@ public partial class MainWindow : MetroWindow
     /// </summary>
     private async Task Refresh()
     {
-        CancellationTokenSource cts = new();
-
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Running detection, this might take a moment");
 
@@ -113,13 +110,9 @@ public partial class MainWindow : MetroWindow
         _actionsToRun.Clear();
         ResultsPanel.Children.Clear();
 
-        // timeout to prevent endless hang
-        cts.CancelAfter(RefreshTimeout);
-        cts.Token.ThrowIfCancellationRequested();
-
         try
         {
-            await Task.Run(() =>
+            Task refreshTask = Task.Run(() =>
             {
                 if (_skipDeviceRefresh)
                 {
@@ -131,80 +124,82 @@ public partial class MainWindow : MetroWindow
                 Devcon.RefreshPhantom();
 
                 Log.Logger.Information("Phantom device refreshing done");
-            }, cts.Token).ContinueWith(async _ =>
+            });
+
+            if (await Task.WhenAny(refreshTask, Task.Delay(RefreshTimeout)) != refreshTask)
             {
-                // run this fun on UI thread
-                await Dispatcher.Invoke(async () =>
+                throw new OperationCanceledException();
+            }
+
+            await refreshTask;
+
+            DetectHidGuardian();
+
+            DetectScpComponents();
+
+            DetectViGEmBus();
+
+            DetectHidHide();
+
+            DetectBthPS3();
+
+            DetectDsHidMini();
+
+            if (ResultsPanel.Children.Count == 0)
+            {
+                await this.ShowMessageAsync("All good",
+                    "Congratulations, seems like this system is free of any known problematic legacy drivers!");
+            }
+
+            Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
+                ResultsPanel.Children.Count);
+
+            // bail out here to show normal GUI
+            if (!_isInUpdaterMode)
+            {
+                await controller.CloseAsync();
+                return;
+            }
+
+            // nothing to do
+            if (!_actionsToRun.Any())
+            {
+                Application.Current.Shutdown(0);
+                return;
+            }
+
+            try
+            {
+                controller.SetMessage("Running fixes for detected problems");
+
+                // run detected fixed automatically
+                foreach (Action fix in _actionsToRun)
                 {
-                    DetectHidGuardian();
+                    fix.Invoke();
+                }
 
-                    DetectScpComponents();
+                await controller.CloseAsync();
 
-                    DetectViGEmBus();
+                await this.ShowMessageAsync("Update finished",
+                    "Everything finished successfully. This app will close once you clicked 'OK'."
+                );
 
-                    DetectHidHide();
+                Application.Current.Shutdown(0);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Fatal(ex, "One or more fixes failed to apply");
 
-                    DetectBthPS3();
+                await controller.CloseAsync();
 
-                    DetectDsHidMini();
+                await this.ShowMessageAsync("Unexpected error",
+                    "One or more operations failed, please try again or contact support. Sorry!"
+                );
 
-                    if (ResultsPanel.Children.Count == 0)
-                    {
-                        await this.ShowMessageAsync("All good",
-                            "Congratulations, seems like this system is free of any known problematic legacy drivers!");
-                    }
-
-                    Log.Logger.Information("Finished refresh of all component detection, found {Count} issues",
-                        ResultsPanel.Children.Count);
-
-                    // bail out here to show normal GUI
-                    if (!_isInUpdaterMode)
-                    {
-                        await controller.CloseAsync();
-                        return;
-                    }
-
-                    // nothing to do
-                    if (!_actionsToRun.Any())
-                    {
-                        Application.Current.Shutdown(0);
-                        return;
-                    }
-
-                    try
-                    {
-                        controller.SetMessage("Running fixes for detected problems");
-
-                        // run detected fixed automatically
-                        foreach (Action fix in _actionsToRun)
-                        {
-                            fix.Invoke();
-                        }
-
-                        await controller.CloseAsync();
-
-                        await this.ShowMessageAsync("Update finished",
-                            "Everything finished successfully. This app will close once you clicked 'OK'."
-                        );
-                        
-                        Application.Current.Shutdown(0);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Logger.Fatal(ex, "One or more fixes failed to apply");
-
-                        await controller.CloseAsync();
-                        
-                        await this.ShowMessageAsync("Unexpected error",
-                            "One or more operations failed, please try again or contact support. Sorry!"
-                        );
-                        
-                        Application.Current.Shutdown(-2);
-                    }
-                });
-            }, cts.Token);
+                Application.Current.Shutdown(-2);
+            }
         }
-        catch (TaskCanceledException)
+        catch (OperationCanceledException)
         {
             await controller.CloseAsync();
 
@@ -221,6 +216,21 @@ public partial class MainWindow : MetroWindow
 
             Application.Current.Shutdown(-1);
         }
+        catch (Exception)
+        {
+            await controller.CloseAsync();
+            throw;
+        }
+    }
+
+    private void QueueAction(Action fix)
+    {
+        if (_actionsToRun.Contains(fix))
+        {
+            return;
+        }
+
+        _actionsToRun.Add(fix);
     }
 
     private void OpenGitHub(object sender, RoutedEventArgs e)

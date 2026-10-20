@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Legacinator.Core;
+
 using IniParser;
 using IniParser.Exceptions;
 using IniParser.Model;
@@ -50,7 +52,7 @@ public partial class MainWindow
                 Version driverVersion = new(bus.GetProperty<string>(DevicePropertyKey.Device_DriverVersion));
 
                 if (hardwareId.Equals(Constants.ViGemBusVersion1_16HardwareId, StringComparison.OrdinalIgnoreCase)
-                    && driverVersion < Constants.ViGEmBusVersionLatest)
+                    && DriverVersionRules.IsOlderThan(driverVersion, Constants.ViGEmBusVersionLatest))
                 {
                     ResultsPanel.Children.Add(CreateNewTile($"Outdated ViGEmBus (Gen1) Driver found (v{driverVersion})",
                         ViGEmBusGen1OutdatedOnClicked));
@@ -108,7 +110,7 @@ public partial class MainWindow
                                     ViGEmBusUpdaterUrlOutdatedOnClicked, true));
                             }
 
-                            _actionsToRun.Add(FixViGEmBusUpdaterUrlOutdated);
+                            QueueAction(FixViGEmBusUpdaterUrlOutdated);
                         }
                     }
                     
@@ -133,7 +135,7 @@ public partial class MainWindow
                                     ViGEmBusUpdaterUrlOutdatedOnClicked, true));
                             }
 
-                            _actionsToRun.Add(FixViGEmBusUpdaterUrlOutdated);
+                            QueueAction(FixViGEmBusUpdaterUrlOutdated);
                         }
                     }
                 }
