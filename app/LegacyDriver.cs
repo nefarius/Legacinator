@@ -219,11 +219,14 @@ internal static class LegacyDriver
     private static bool InfAssociatesDriverFile(string contents, string expectedFileName)
     {
         Dictionary<string, List<string>> sections = ParseInfSections(contents);
+        HashSet<string> installSections = GetInfInstallSections(sections);
         HashSet<string> copySections = new(StringComparer.OrdinalIgnoreCase);
 
-        foreach (List<string> lines in sections.Values)
+        foreach (KeyValuePair<string, List<string>> section in sections)
         {
-            foreach (string line in lines)
+            bool isInstallSection = IsInfInstallSection(section.Key, installSections);
+
+            foreach (string line in section.Value)
             {
                 if (!TrySplitInfDirective(line, out string key, out string value))
                 {
@@ -232,6 +235,11 @@ internal static class LegacyDriver
 
                 if (key.Equals("CopyFiles", StringComparison.OrdinalIgnoreCase))
                 {
+                    if (!isInstallSection)
+                    {
+                        continue;
+                    }
+
                     foreach (string token in SplitInfList(value))
                     {
                         string entry = UnquoteInf(token);
@@ -276,6 +284,66 @@ internal static class LegacyDriver
                 {
                     return true;
                 }
+            }
+        }
+
+        return false;
+    }
+
+    private static HashSet<string> GetInfInstallSections(Dictionary<string, List<string>> sections)
+    {
+        HashSet<string> installSections = new(StringComparer.OrdinalIgnoreCase);
+
+        if (!sections.TryGetValue("Manufacturer", out List<string> manufacturers))
+        {
+            return installSections;
+        }
+
+        foreach (string manufacturer in manufacturers)
+        {
+            if (!TrySplitInfDirective(manufacturer, out _, out string value))
+            {
+                continue;
+            }
+
+            List<string> parts = SplitInfList(value);
+            string modelsName = UnquoteInf(parts[0]);
+
+            for (int index = -1; index < parts.Count - 1; index++)
+            {
+                string modelsSection = index < 0 ? modelsName : modelsName + "." + UnquoteInf(parts[index + 1]);
+
+                if (!sections.TryGetValue(modelsSection, out List<string> models))
+                {
+                    continue;
+                }
+
+                foreach (string model in models)
+                {
+                    if (TrySplitInfDirective(model, out _, out string modelValue))
+                    {
+                        string install = UnquoteInf(SplitInfList(modelValue)[0]);
+
+                        if (install.Length > 0)
+                        {
+                            installSections.Add(install);
+                        }
+                    }
+                }
+            }
+        }
+
+        return installSections;
+    }
+
+    private static bool IsInfInstallSection(string sectionName, HashSet<string> installSections)
+    {
+        foreach (string install in installSections)
+        {
+            if (sectionName.Equals(install, StringComparison.OrdinalIgnoreCase) ||
+                sectionName.StartsWith(install + ".", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
             }
         }
 
