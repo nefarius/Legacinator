@@ -166,6 +166,7 @@ public partial class MainWindow
             await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
         bool removed = false;
+        bool cleanupFailed = false;
 
         await System.Threading.Tasks.Task.Run(() =>
         {
@@ -185,16 +186,17 @@ public partial class MainWindow
                 }
                 catch (Exception ex)
                 {
+                    cleanupFailed = true;
                     Log.Error(ex, "Failed to remove the BthPS3PSM class filter");
                 }
             }
 
             removed |= RemoveLegacyBthPS3Devices(controller, DeviceClassIds.System, Constants.BthPS3FilterHardwareId,
                 false, Constants.BthPS3FilterServiceName, Constants.BthPS3FilterDriverFileName,
-                Constants.BthPS3FilterInfName);
+                Constants.BthPS3FilterInfName, ref cleanupFailed);
             removed |= RemoveLegacyBthPS3Devices(controller, DeviceClassIds.Bluetooth,
                 Constants.BthPS3ProfileHardwareId, true, Constants.BthPS3ProfileServiceName,
-                Constants.BthPS3ProfileDriverFileName, Constants.BthPS3ProfileInfName);
+                Constants.BthPS3ProfileDriverFileName, Constants.BthPS3ProfileInfName, ref cleanupFailed);
 
             HashSet<string> nullPdoInfs = new(StringComparer.OrdinalIgnoreCase);
             HashSet<string> nullPdoInfsWithFailedRemoval = new(StringComparer.OrdinalIgnoreCase);
@@ -213,11 +215,13 @@ public partial class MainWindow
                 }
                 catch (Exception ex)
                 {
+                    cleanupFailed = true;
                     Log.Error(ex, "Failed to remove BthPS3 null PDO {Instance}", instanceId);
                 }
             }
 
-            DeleteBoundDriverPackages(nullPdoInfs, nullPdoInfsWithFailedRemoval);
+            cleanupFailed |= nullPdoInfsWithFailedRemoval.Count > 0;
+            cleanupFailed |= !DeleteBoundDriverPackages(nullPdoInfs, nullPdoInfsWithFailedRemoval);
 
             if (IsLegacyBthPS3FilterService(out _))
             {
@@ -231,9 +235,14 @@ public partial class MainWindow
                     {
                         removed = true;
                     }
+                    else
+                    {
+                        cleanupFailed = true;
+                    }
                 }
                 catch (Exception ex)
                 {
+                    cleanupFailed = true;
                     Log.Error(ex, "Failed to delete the BthPS3PSM service");
                 }
             }
@@ -242,7 +251,9 @@ public partial class MainWindow
         if (removed)
         {
             await this.ShowMessageAsync("Reboot recommended",
-                "BthPS3 v1 components got cleaned up, a reboot is highly recommended to finish the procedure.");
+                cleanupFailed
+                    ? "BthPS3 v1 cleanup is incomplete, a reboot is highly recommended to finish the procedure."
+                    : "BthPS3 v1 components got cleaned up, a reboot is highly recommended to finish the procedure.");
         }
 
         await controller.CloseAsync();
@@ -251,7 +262,8 @@ public partial class MainWindow
     }
 
     private static bool RemoveLegacyBthPS3Devices(ProgressDialogController controller, Guid classGuid,
-        string hardwareId, bool allowPartial, string serviceName, string driverFileName, string packageName)
+        string hardwareId, bool allowPartial, string serviceName, string driverFileName, string packageName,
+        ref bool cleanupFailed)
     {
         bool removed = false;
         HashSet<string> infsToDelete = new(StringComparer.OrdinalIgnoreCase);
@@ -272,11 +284,13 @@ public partial class MainWindow
             }
             catch (Exception ex)
             {
+                cleanupFailed = true;
                 Log.Error(ex, "Failed to remove BthPS3 instance {Instance}", instanceId);
             }
         }
 
-        DeleteBoundDriverPackages(infsToDelete, infsWithFailedRemoval);
+        cleanupFailed |= infsWithFailedRemoval.Count > 0;
+        cleanupFailed |= !DeleteBoundDriverPackages(infsToDelete, infsWithFailedRemoval);
         return removed;
     }
 

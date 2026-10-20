@@ -225,13 +225,16 @@ public partial class MainWindow
         return true;
     }
 
-    private static void DeleteBoundDriverPackages(ISet<string> infsToDelete, ISet<string> infsWithFailedRemoval)
+    private static bool DeleteBoundDriverPackages(ISet<string> infsToDelete, ISet<string> infsWithFailedRemoval)
     {
+        bool deletedAll = true;
+
         foreach (string infName in infsToDelete)
         {
             if (infsWithFailedRemoval.Contains(infName))
             {
                 Log.Warning("Keeping driver package {Inf} because a device is still bound to it", infName);
+                deletedAll = false;
                 continue;
             }
 
@@ -242,9 +245,12 @@ public partial class MainWindow
             }
             catch (Exception ex)
             {
+                deletedAll = false;
                 Log.Error(ex, "Failed to delete driver package {Inf}", infName);
             }
         }
+
+        return deletedAll;
     }
 
     private static void AddHardwareIdMatches(ISet<string> instanceIds, Guid classGuid, string hardwareId,
