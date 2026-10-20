@@ -21,6 +21,8 @@ etc.) and provides a solution to the user.
 - Detects and removes [HidGuardian](https://github.com/nefarius/HidGuardian)
 - Detects and removes outdated versions of [ViGEmBus](https://github.com/nefarius/ViGEmBus)
 - Detects and removes outdated versions of [HidHide](https://github.com/nefarius/HidHide)
+- Detects and removes major version 1 of [DsHidMini](https://github.com/nefarius/DsHidMini)
+- Detects and removes major version 1 of [BthPS3](https://github.com/nefarius/BthPS3)
 - Detects the [HP fork of ViGEmBus from 2018](https://github.com/nefarius/ViGEmBus/issues/99) and offers mitigation
   instructions
 - Detects and fixes [outdated updater agent configuration](https://docs.nefarius.at/projects/ViGEm/End-of-Life/).

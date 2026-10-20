@@ -146,6 +146,8 @@ public partial class MainWindow : MetroWindow
 
                     DetectBthPS3();
 
+                    DetectDsHidMini();
+
                     if (ResultsPanel.Children.Count == 0)
                     {
                         await this.ShowMessageAsync("All good",
