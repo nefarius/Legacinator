@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -103,9 +102,6 @@ public partial class MainWindow : MetroWindow
     /// </summary>
     private async Task Refresh()
     {
-        using CancellationTokenSource cts = new();
-        cts.CancelAfter(RefreshTimeout);
-
         ProgressDialogController controller =
             await this.ShowProgressAsync("Please wait...", "Running detection, this might take a moment");
 
@@ -116,7 +112,7 @@ public partial class MainWindow : MetroWindow
 
         try
         {
-            await Task.Run(() =>
+            Task refreshTask = Task.Run(() =>
             {
                 if (_skipDeviceRefresh)
                 {
@@ -128,7 +124,14 @@ public partial class MainWindow : MetroWindow
                 Devcon.RefreshPhantom();
 
                 Log.Logger.Information("Phantom device refreshing done");
-            }, cts.Token);
+            });
+
+            if (await Task.WhenAny(refreshTask, Task.Delay(RefreshTimeout)) != refreshTask)
+            {
+                throw new OperationCanceledException();
+            }
+
+            await refreshTask;
 
             DetectHidGuardian();
 
