@@ -8,16 +8,78 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Windows net48 build
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Setup .Net SDK
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: 8.x
+          dotnet-version: 10.x
+
+      - name: Show .NET SDK
+        run: dotnet --version
+
+      - name: Ensure .NET Framework 4.8 targeting pack
+        shell: pwsh
+        run: |
+          $reference = Join-Path ${env:ProgramFiles(x86)} "Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll"
+          if (Test-Path -LiteralPath $reference) {
+            Write-Host "Found $reference"
+            exit 0
+          }
+
+          Write-Host "Installing the .NET Framework 4.8 Developer Pack"
+          $installer = Join-Path $env:RUNNER_TEMP "ndp48-devpack.exe"
+          Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088517" -OutFile $installer
+          $process = Start-Process -FilePath $installer -ArgumentList "/quiet","/norestart" -Wait -PassThru
+          if ($process.ExitCode -ne 0 -and $process.ExitCode -ne 3010) {
+            exit $process.ExitCode
+          }
+
+          if (-not (Test-Path -LiteralPath $reference)) {
+            throw "The .NET Framework 4.8 targeting pack is not available at $reference"
+          }
+
+      - name: Restore
+        run: dotnet restore Legacinator.sln
 
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build Legacinator.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test Legacinator.sln -c Release --no-build
+
+      - name: Upload legacy build
+        uses: actions/upload-artifact@v7
+        with:
+          name: legacinator-net48
+          if-no-files-found: error
+          path: |
+            bin/Release/Legacinator.exe
+            bin/Release/Legacinator.exe.config
+
+  portable-tests:
+    name: Portable tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.x
+
+      - name: Show .NET SDK
+        run: dotnet --version
+
+      - name: Restore
+        run: dotnet restore tests/Legacinator.Core.Tests/Legacinator.Core.Tests.csproj
+
+      - name: Test
+        run: dotnet test tests/Legacinator.Core.Tests/Legacinator.Core.Tests.csproj -c Release --no-restore

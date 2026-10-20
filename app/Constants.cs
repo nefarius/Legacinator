@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+
+using Legacinator.Core;
 
 namespace Legacinator;
 
@@ -127,7 +128,7 @@ public static class Constants
 
     public static bool IsAllowedScpInf(string infName)
     {
-        return ScpInfAllowedNames.Any(allowedName => infName.ToLower().Contains(allowedName.ToLower()));
+        return ScpInfRules.IsAllowed(infName, ScpInfAllowedNames);
     }
 
     #endregion

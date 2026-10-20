@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Legacinator.Core;
+
 using IniParser;
 using IniParser.Exceptions;
 using IniParser.Model;
@@ -42,7 +44,7 @@ public partial class MainWindow
                 Version driverVersion = new(virtualDevice.GetProperty<string>(DevicePropertyKey.Device_DriverVersion));
 
                 if (hardwareId.Equals(Constants.HidHideHardwareId, StringComparison.OrdinalIgnoreCase)
-                    && driverVersion < Constants.HidHideDriverVersionLatest)
+                    && DriverVersionRules.IsOlderThan(driverVersion, Constants.HidHideDriverVersionLatest))
                 {
                     ResultsPanel.Children.Add(CreateNewTile($"Outdated HidHide Driver found (v{driverVersion})",
                         HidHideOutdatedOnClicked));
@@ -85,7 +87,7 @@ public partial class MainWindow
                                     HidHideUpdaterUrlOutdatedOnClicked, true));
                             }
 
-                            _actionsToRun.Add(FixHidHideUpdaterUrlOutdated);
+                            QueueAction(FixHidHideUpdaterUrlOutdated);
                         }
                     }
                 }

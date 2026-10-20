@@ -33,6 +33,10 @@ etc.) and provides a solution to the user.
 This tool was built for **Windows 10** or later. Anything lower might work but is not supported. Since .NET 4.8 ships
 with Windows, the tool should be ready to run once downloaded.
 
+Automated builds produce the .NET Framework 4.8 executable and run the portable detection tests. Snapshot-backed
+Windows 10 and Windows 11 checks are listed in
+[docs/windows-compatibility-checklist.md](docs/windows-compatibility-checklist.md).
+
 ## Download
 
 👉 [Get the latest signed release from here](../../releases/latest). Use at your own risk. No support provided

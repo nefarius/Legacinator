@@ -37,6 +37,9 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\core\Legacinator.Core\Legacinator.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="ControlzEx" Version="7.0.4" />
     <PackageReference Include="Costura.Fody" Version="6.2.0">
       <PrivateAssets>all</PrivateAssets>
