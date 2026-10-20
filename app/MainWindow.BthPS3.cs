@@ -212,6 +212,10 @@ public partial class MainWindow
                     {
                         removed = true;
                     }
+                    else
+                    {
+                        cleanupFailed = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -285,6 +289,10 @@ public partial class MainWindow
                         infsWithFailedRemoval))
                 {
                     removed = true;
+                }
+                else
+                {
+                    cleanupFailed = true;
                 }
             }
             catch (Exception ex)

@@ -51,6 +51,10 @@ public partial class MainWindow
                     {
                         removed = true;
                     }
+                    else
+                    {
+                        cleanupFailed = true;
+                    }
                 }
                 catch (Exception ex)
                 {
