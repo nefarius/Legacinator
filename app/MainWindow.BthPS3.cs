@@ -255,6 +255,11 @@ public partial class MainWindow
                     ? "BthPS3 v1 cleanup is incomplete, a reboot is highly recommended to finish the procedure."
                     : "BthPS3 v1 components got cleaned up, a reboot is highly recommended to finish the procedure.");
         }
+        else if (cleanupFailed)
+        {
+            await this.ShowMessageAsync("Cleanup failed",
+                "BthPS3 v1 components could not be removed, please check the log for details.");
+        }
 
         await controller.CloseAsync();
 

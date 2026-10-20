@@ -33,6 +33,7 @@ public partial class MainWindow
             await this.ShowProgressAsync("Please wait...", "Attempting driver removal");
 
         bool removed = false;
+        bool cleanupFailed = false;
 
         await Task.Run(() =>
         {
@@ -53,17 +54,26 @@ public partial class MainWindow
                 }
                 catch (Exception ex)
                 {
+                    cleanupFailed = true;
                     Log.Error(ex, "Failed to remove DsHidMini instance {Instance}", instanceId);
                 }
             }
 
-            DeleteBoundDriverPackages(infsToDelete, infsWithFailedRemoval);
+            cleanupFailed |= infsWithFailedRemoval.Count > 0;
+            cleanupFailed |= !DeleteBoundDriverPackages(infsToDelete, infsWithFailedRemoval);
         });
 
         if (removed)
         {
             await this.ShowMessageAsync("Reboot recommended",
-                "DsHidMini v1 components got cleaned up, a reboot is highly recommended to finish the procedure.");
+                cleanupFailed
+                    ? "DsHidMini v1 cleanup is incomplete, a reboot is highly recommended to finish the procedure."
+                    : "DsHidMini v1 components got cleaned up, a reboot is highly recommended to finish the procedure.");
+        }
+        else if (cleanupFailed)
+        {
+            await this.ShowMessageAsync("Cleanup failed",
+                "DsHidMini v1 components could not be removed, please check the log for details.");
         }
 
         await controller.CloseAsync();
